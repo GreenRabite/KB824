@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>KB824</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+  <body>
+
+
+    <script type="text/javascript">
+
+      d3.csv("./data/kobe-playoff1.csv", (data)=>{
+        let canvas = d3.select("body").append("svg")
+          .attr("width",500)
+          .attr("height",500)
+
+        let x = d3.scale.linear()
+
+        canvas.selectAll("rect")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("width",(d) => {return d.Date})
+          .attr("height",40)
+          .attr("y", (d,i) => {return d.PTS; })
+          .attr("fill","blue")
+      })
+
+
+    </script>
+
+  </body>
+</html>
