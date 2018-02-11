@@ -2,9 +2,9 @@
 
 ## Background and Overview
 
-Kobe Bryant was one of basketball most endearing stars amassing over 30,000 points, 5 NBA championships, and 3 total Most Valuable Player awards (2x Finals, 1x regular season).
+Kobe Bryant was one of basketball most endearing superstars of the modern era amassing over 30,000 points, 5 NBA championships, and 3 total Most Valuable Player awards (2x Finals, 1x regular season). He was known for his incredible work ethic and absolute skill in the game of basketball as well as giving it all to those less fortunate.
 
-KB824 will take a look into his illustrious 20 year career with the Los Angeles Lakers. This visualization project will hope to have a timeline illustrating all his games and his effectiveness in each one. This project will hope to have many interactive elements including the following:
+KB824 is a web application that will take a look into his illustrious 20 year career with the Los Angeles Lakers. This visualization project will hope to have a timeline illustrating all his games and his effectiveness in each one. This project will hope to have many interactive elements including the following:
 
 * Big Games
 * Filterable states
