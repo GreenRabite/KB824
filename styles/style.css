@@ -1,0 +1,15 @@
+.area {
+  fill: #FDB827;
+  clip-path: url(#clip);
+}
+
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+#kobe-timeline{
+  width: 900px;
+  height: 800px;
+}

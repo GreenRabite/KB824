@@ -1,96 +1,18 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style> /* set the CSS */
-
-
-</style>
-<body>
-
-<!-- load the d3.js library -->
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script>
-
-// set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 70, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-//set width and height variables
-// let width = 500;
-// let height = 100;
-let padding = 1;
-
-// parse the date / time
-var parseTime = d3.timeParse("%y-%b-%d");
-
-
-
-// append the svg obgect to the body of the page
-// appends a 'group' element to 'svg'
-// moves the 'group' element to the top left margin
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-
-// Get the data
-d3.csv("./data/kobe-playoff1.csv", function(error, data) {
-  if (error) throw error;
-
-  // format the data
-  data.forEach(function(d) {
-      d.date = new Date(d.Date);
-      // d.date = parseTime(d.Date);
-      d.PTS = +d.PTS;
-  });
-
-  // Scale the range of the data
-  // set the ranges
-  let x = d3.scaleTime()
-    .range([0, width - margin.left - margin.right])
-    .domain(d3.extent(data, function(d) { return d.date; }));
-  let y = d3.scaleLinear()
-    .domain([0, d3.max(data, function(d) { return d.PTS; })])
-    .range([height, 0]);
-
-  //Add bar
-  svg.selectAll("rect")
-   .data(data)
-   .enter()
-   .append("rect")
-     .attr("x", (d,i)=>{
-       return x(d.date);
-     })
-     .attr("y", (d)=>{
-       console.log("a",d.PTS);
-       return y(d.PTS);
-     })
-     .attr("fill","blue")
-     .attr("width", width / data.length - padding)
-     .attr("height", (d)=>{
-       console.log("height-a",height - d.PTS);
-       return height- y(d.PTS);
-     });
-
-  // Add the X Axis
-  svg.append("g")
-      .attr("class", "axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).ticks(10))
-      .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)");
-
-  // Add the Y Axis
-  svg.append("g")
-      .attr("class", "axis")
-      .call(d3.axisLeft(y));
-
-});
-
-</script>
-</body>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>KB824</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="/styles/style.css">
+    <script
+     src="http://code.jquery.com/jquery-3.3.1.min.js"
+     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+     crossorigin="anonymous">
+   </script>
+   <script src="./app/assets/javascripts/bundle.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="kobe-timeline"></div>
+  </body>
+</html>

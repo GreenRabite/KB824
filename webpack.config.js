@@ -3,10 +3,10 @@ const path = require('path');
 
 module.exports = {
   context: __dirname,
-  entry: './entry.js',
+  entry: './index.js',
   output: {
     path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
-    filename: 'bundle.js'
+    filename: './bundle.js'
   },
   resolve: {
     extensions: ['.js', '.jsx', '*']
@@ -16,10 +16,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['env', 'react']
-        }
+        loader: 'babel-loader'
       }
     ]
   },

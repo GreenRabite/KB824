@@ -13,8 +13,25 @@
   pointer-events: all;
 }
 
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  /*width: 150px;*/
+  height: 28px;
+  padding: 2px 5px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.gameEvent:hover{
+  background-color: red;
+}
+
 </style>
-<svg width="960" height="500"></svg>
+<svg width="1300" height="500"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
@@ -26,8 +43,6 @@ var svg = d3.select("svg"),
     height = +svg.attr("height") - margin.top - margin.bottom,
     height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
-var parseDate = d3.timeParse("%b %Y");
-
 var x = d3.scaleTime().range([0, width]),
     x2 = d3.scaleTime().range([0, width]),
     y = d3.scaleLinear().range([height, 0]),
@@ -36,6 +51,8 @@ var x = d3.scaleTime().range([0, width]),
 var xAxis = d3.axisBottom(x),
     xAxis2 = d3.axisBottom(x2),
     yAxis = d3.axisLeft(y);
+
+
 
 var brush = d3.brushX()
     .extent([[0, 0], [width, height2]])
@@ -73,7 +90,11 @@ var context = svg.append("g")
     .attr("class", "context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-d3.csv("./data/kobe-playoff1.csv", type, function(error, data) {
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+d3.csv("./data/kobe-reg-games-log.csv", type, function(error, data) {
   if (error) throw error;
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -81,7 +102,6 @@ d3.csv("./data/kobe-playoff1.csv", type, function(error, data) {
   x2.domain(x.domain());
   y2.domain(y.domain());
 
-  debugger;
 
   let fixedData ={};
   let arr = [];
@@ -92,12 +112,38 @@ d3.csv("./data/kobe-playoff1.csv", type, function(error, data) {
     fixedData = {};
   })
 
-  debugger;
+  //
+  // focus.append("path")
+  //     .datum(arr)
+  //     .attr("class", "area")
+  //     .attr("d", area);
 
-  focus.append("path")
-      .datum(arr)
-      .attr("class", "area")
-      .attr("d", area);
+  // *** Parse the date / time
+var formatTime = d3.timeFormat("%H:%M:%S");
+
+  // draw dots
+  focus.selectAll("circle")
+      .data(data)
+      .enter().append("circle")
+        // .attr("class", "brush")
+        .attr("class", "gameEvent")
+        .attr("r", (d)=>{return (d.PTS/6)})
+        .attr("cx", (d)=>{return x(d.date)})
+        .attr("cy", (d)=>{return y(d.PTS)})
+        .style("fill", "#552583")
+        .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(`Kobe scored ${d.PTS} points, grab ${d.TRB} rebounds, and dished out ${d.AST} assists against the ${d.Opp} on ${d.Date}.`)
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+      });
 
   focus.append("g")
       .attr("class", "axis axis--x")
@@ -123,7 +169,7 @@ d3.csv("./data/kobe-playoff1.csv", type, function(error, data) {
       .call(brush)
       .call(brush.move, x.range());
 
-  svg.append("rect")
+  focus.append("g")
       .attr("class", "zoom")
       .attr("width", width)
       .attr("height", height)
@@ -157,7 +203,13 @@ function type(d) {
   // d.date = new Date(d.Date);
   d.date = Date.parse(d.Date);
   d.PTS = +d.PTS;
+  d.TRB = +d.TRB;
+  d.AST= +d.AST;
   return d;
 }
 
 </script>
+
+<body>
+  <div id="chart">Hello</div>
+</body>
