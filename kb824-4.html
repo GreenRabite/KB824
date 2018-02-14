@@ -20,18 +20,19 @@ div.tooltip {
   height: 28px;
   padding: 2px 5px;
   font: 12px sans-serif;
-  background: lightsteelblue;
+  color: black;
+  background: #FDB927;
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
 }
 
-.gameEvent:hover{
-  background-color: red;
+.chart-2{
+  margin-top: 20px;
 }
 
 </style>
-<svg width="1300" height="500"></svg>
+<svg width="1200" height="500"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
@@ -205,8 +206,6 @@ var formatTime = d3.timeFormat("%H:%M:%S");
                   d3.select(this)  // 'this' means the current element
                       // .style("fill", "#552583")
                       .attr("fill", "#FDB927")  // Change color
-                      .attr("stroke","black")
-                      .attr("stroke-width","1")
                       .attr("r", 5);  // Change size
               })
               .delay(function(d, i) {
@@ -382,5 +381,51 @@ function type(d) {
     <button type="button" class="pts">Points</button>
     <button type="button" class="rebs">Rebounds</button>
     <button type="button" class="asts">Assists</button>
+  </div>
+
+  <div class="chart2">
+    <svg class="svg2" width="400" height="400"></svg>
+    <script>
+    let svg2 = d3.select(".svg2")
+      .style("border","1px solid black")
+      .attr("transform", "translate(10,20)"),
+      widthSvg2 = +svg2.attr("width") - margin.left -   margin.right,
+      heightSvg2 = +svg2.attr("height") - margin.top - margin.bottom;
+
+    let graph = svg2.append("g")
+      .attr("class","graph")
+      .attr("transform",`translate(${margin.left},${margin.top})`);
+
+    d3.csv("./data/kobe-reg-games-log.csv", type, function(error, data) {
+      if (error) throw error;
+
+      graph.append("circle")
+        .attr("cx","0")
+        .attr("cy","0")
+        .attr("r","10");
+
+    });
+
+    function type(d) {
+      d.date = new Date(d.Date);
+      d.month = d.date.getMonth();
+      debugger;
+      d.PTS = +d.PTS;
+      d.FG = +d.FG;
+      d.STL = +d.STL;
+      d.TPM = +d["3P"];
+      d.FT = +d.FT;
+      d.BLK = +d.BLK;
+      d.ORB = +d.ORB;
+      d.DRB = +d.DRB;
+      d.PF = +d.PF;
+      d.FTA = +d.FTA;
+      d.FGA = +d.FGA;
+      d.TOV = +d.TOV;
+      d.AST= +d.AST;
+      return d;
+    }
+
+    </script>
   </div>
 </body>
