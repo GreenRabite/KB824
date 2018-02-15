@@ -1,35 +1,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<link rel="stylesheet" href="/styles/style.css">
 <style>
 
-.area {
-  fill: #FDB827;
-  clip-path: url(#clip);
-}
 
-.zoom {
-  cursor: move;
-  fill: none;
-  pointer-events: all;
-}
-
-div.tooltip {
-  position: absolute;
-  text-align: center;
-  /*width: 150px;*/
-  height: 28px;
-  padding: 2px 5px;
-  font: 12px sans-serif;
-  color: black;
-  background: #FDB927;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
-}
-
-.chart-2{
-  margin-top: 20px;
-}
 
 </style>
 <svg width="1200" height="500"></svg>
@@ -132,6 +106,9 @@ var formatTime = d3.timeFormat("%H:%M:%S");
         .attr("cx", (d)=>{return x(d.date)})
         .attr("cy", (d)=>{return y(d.PTS)})
         .attr("fill", "#552583")
+        .on("click", (d)=>{
+          updateTable(d);
+        })
         .on("mouseover", function(d) {
           tooltip.transition()
                .duration(200)
@@ -254,7 +231,6 @@ var formatTime = d3.timeFormat("%H:%M:%S");
               .transition()  // Transition from old to new
               .duration(1000)  // Length of animation
               .on("start", function() {  // Start animation
-                  debugger;
                   d3.select(this)  // 'this' means the current element
                       .attr("fill", "#FDB927")
                       // .attr("fill", "red")  // Change color
@@ -304,7 +280,6 @@ var formatTime = d3.timeFormat("%H:%M:%S");
               .transition()  // Transition from old to new
               .duration(1000)  // Length of animation
               .on("start", function() {  // Start animation
-                  debugger;
                   d3.select(this)  // 'this' means the current element
                       .attr("fill", "#FDB927")
                       // .attr("fill", "red")  // Change color
@@ -342,6 +317,65 @@ var formatTime = d3.timeFormat("%H:%M:%S");
                   .call(yAxis);
       });
 });
+
+function updateTable(d) {
+  let teamLogo = {
+    "ATL" : "app/assets/images/9168_atlanta_hawks-primary-2016.png",
+    "BRK" : "app/assets/images/137_brooklyn-nets-primary-2013.png",
+    "CHA" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
+    "DET" : "app/assets/images/2164_detroit_pistons-primary-2018.png",
+    "SAS" : "app/assets/images/2547_san_antonio_spurs-primary-2018.png",
+    "NOH" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
+    "DAL" : "app/assets/images/3463_dallas_mavericks-primary-2018.png",
+    "SAC" : "app/assets/images/4043_sacramento_kings-primary-2017.png",
+    "PHO" : "app/assets/images/4370_phoenix_suns-primary-2014.png",
+    "TOR": "app/assets/images/4578_toronto_raptors-primary-2016.png",
+    "IND": "app/assets/images/4812_indiana_pacers-primary-2018.png",
+    "LAC" : "app/assets/images/5462_los_angeles_clippers-primary-2016.png",
+    "WAS" : "app/assets/images/5671_washington_wizards-primary-2016.png",
+    "CLE" : "app/assets/images/6921_cleveland_cavaliers-primary-2018.png",
+    "PHI" : "app/assets/images/7034_philadelphia_76ers-primary-2016.png",
+    "MIL": "app/assets/images/8275_milwaukee_bucks-primary-2016.png",
+    "MIN" : "app/assets/images/9669_minnesota_timberwolves-primary-2018.png",
+    "POR" : "app/assets/images/9725_portland_trail_blazers-primary-2018.png",
+    "BOS" : "app/assets/images/boston.png",
+    "CHI" : "app/assets/images/bulls.png",
+    "DEN" : "app/assets/images/denver.gif",
+    "MEM" : "app/assets/images/grizz.gif",
+    "MIA" : "app/assets/images/heat.gif",
+    "NYK" : "app/assets/images/knicks.gif",
+    "ORL" : "app/assets/images/magics.gif",
+    "OKC" : "app/assets/images/okc.png",
+    "HOU" : "app/assets/images/rockets.gif",
+    "GSW" : "app/assets/images/warriors.png",
+    "UTA" :  "app/assets/images/6749_utah_jazz-primary-2017.png",
+    "NOH" : "app/assets/images/NOH.gif",
+    "SEA" : "app/assets/images/sonics.gif",
+    "VAN" : "app/assets/images/van-grizz.gif"
+  }
+  
+  let pts = document.getElementById("tb-pts");
+  let trb = document.getElementById("tb-rebs");
+  let asts = document.getElementById("tb-asts");
+  let stls = document.getElementById("tb-stls");
+  let blks = document.getElementById("tb-blks");
+  let tovs = document.getElementById("tb-tovs");
+  let fg = document.getElementById("tb-fg");
+  let threept = document.getElementById("tb-threept");
+  let ft = document.getElementById("tb-ft");
+  let oppImg = document.getElementById("oppImg");
+  debugger;
+  pts.innerText = `${d.PTS}`;
+  trb.innerText = `${d.TRB}`;
+  asts.innerText = `${d.AST}`;
+  stls.innerText = `${d.STL}`;
+  blks.innerText = `${d.BLK}`;
+  tovs.innerText = `${d.TOV}`;
+  fg.innerText = `${((d.FG / d.FGA) * 100).toFixed(1) + "%"}`;
+  threept.innerText = `${((d["3P"] / d["3PA"]) * 100).toFixed(1) + "%"}`;
+  ft.innerText = `${((d.FT / d.FTA) * 100).toFixed(1) + "%"}`;
+  oppImg.src = teamLogo[d.Opp]
+}
 
 function brushed() {
   if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
@@ -382,50 +416,54 @@ function type(d) {
     <button type="button" class="rebs">Rebounds</button>
     <button type="button" class="asts">Assists</button>
   </div>
-
-  <div class="chart2">
-    <svg class="svg2" width="400" height="400"></svg>
-    <script>
-    let svg2 = d3.select(".svg2")
-      .style("border","1px solid black")
-      .attr("transform", "translate(10,20)"),
-      widthSvg2 = +svg2.attr("width") - margin.left -   margin.right,
-      heightSvg2 = +svg2.attr("height") - margin.top - margin.bottom;
-
-    let graph = svg2.append("g")
-      .attr("class","graph")
-      .attr("transform",`translate(${margin.left},${margin.top})`);
-
-    d3.csv("./data/kobe-reg-games-log.csv", type, function(error, data) {
-      if (error) throw error;
-
-      graph.append("circle")
-        .attr("cx","0")
-        .attr("cy","0")
-        .attr("r","10");
-
-    });
-
-    function type(d) {
-      d.date = new Date(d.Date);
-      d.month = d.date.getMonth();
-      debugger;
-      d.PTS = +d.PTS;
-      d.FG = +d.FG;
-      d.STL = +d.STL;
-      d.TPM = +d["3P"];
-      d.FT = +d.FT;
-      d.BLK = +d.BLK;
-      d.ORB = +d.ORB;
-      d.DRB = +d.DRB;
-      d.PF = +d.PF;
-      d.FTA = +d.FTA;
-      d.FGA = +d.FGA;
-      d.TOV = +d.TOV;
-      d.AST= +d.AST;
-      return d;
-    }
-
-    </script>
+  <div class="chart-two">
+    <h3>Game Information</h3>
+    <div class="image-container">
+      <img class="headshot" src="https://people.rit.edu/~axd2776/140/project%202/images/kobe%20bryant.png" alt="">
+      <img id="oppImg" class="headshot">.</img>
+    </div>
+    <table class="table">
+      <tr>
+        <th>Kobe Bryant</th>
+        <td></td>
+      </tr>
+      <tr>
+        <th align="left">Points</th>
+        <td id="tb-pts">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">Rebounds</th>
+        <td id="tb-rebs">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">Assists</th>
+        <td id="tb-asts">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">Steals</th>
+        <td id="tb-stls">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">Blocks</th>
+        <td id="tb-blks">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">Turnovers</th>
+        <td id="tb-tovs">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">FG%</th>
+        <td id="tb-fg">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">FT%</th>
+        <td id="tb-ft">N/A</td>
+      </tr>
+      <tr>
+        <th align="left">3P%</th>
+        <td id="tb-threept">N/A</td>
+      </tr>
+    </table>
   </div>
+
 </body>

@@ -1,3 +1,31 @@
+.chart-two{
+  border: 1px solid black;
+  width: 400px;
+  height: 400px;
+  margin-top: 20px;
+}
+
+.headshot{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  -webkit-filter: drop-shadow(5px 5px 5px #222 );
+  filter: drop-shadow(2.5px 5px 5px #222);
+  /*margin-top: 18px;*/
+  margin-left: 30px;
+}
+
+.chart1-bttn{
+  display: flex;
+  justify-content: center;
+  width: 1200px;
+}
+
+.image-container {
+  vertical-align: middle;
+}
+
 .area {
   fill: #FDB827;
   clip-path: url(#clip);
@@ -9,7 +37,26 @@
   pointer-events: all;
 }
 
-#kobe-timeline{
-  width: 900px;
-  height: 800px;
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  /*width: 150px;*/
+  height: 28px;
+  padding: 2px 5px;
+  font: 12px sans-serif;
+  color: black;
+  background: #FDB927;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.chart-2{
+  margin-top: 20px;
+}
+
+#oppImg {
+  /*width: 155px;
+  height: 90px;*/
+  margin-left: 20px;
 }
