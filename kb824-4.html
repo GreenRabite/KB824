@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <link rel="stylesheet" href="/styles/style.css">
-<style>
-
-
-
-</style>
+<link rel="stylesheet" href="/javascripts/animate.css">
 <svg width="1200" height="500"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -352,7 +348,8 @@ function updateTable(d) {
     "NOH" : "app/assets/images/NOH.gif",
     "SEA" : "app/assets/images/sonics.gif",
     "VAN" : "app/assets/images/van-grizz.gif",
-    "NJN" : "app/assets/images/NJN.gif"
+    "NJN" : "app/assets/images/NJN.gif",
+    "NOK" : "app/assets/images/NOH.gif"
   }
 
   let pts = document.getElementById("tb-pts");
@@ -421,7 +418,7 @@ function type(d) {
     <h3>Game Information</h3>
     <div class="image-container">
       <img class="headshot" src="https://people.rit.edu/~axd2776/140/project%202/images/kobe%20bryant.png" alt="">
-      <img id="oppImg" class="headshot">.</img>
+      <img id="oppImg" class="headshot animated slideInRight">.</img>
     </div>
     <table class="table">
       <tr>
