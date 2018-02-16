@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <link rel="stylesheet" href="/styles/style.css">
-<link rel="stylesheet" href="/javascripts/animate.css">
+<link rel="stylesheet" href="app/assets/javascripts/animate.css">
 <svg width="1200" height="500"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
 <script>
 
 var svg = d3.select("svg"),
@@ -96,7 +97,6 @@ var formatTime = d3.timeFormat("%H:%M:%S");
   focus.selectAll("circle")
       .data(data)
       .enter().append("circle")
-        // .attr("class", "brush")
         .attr("class", "gameEvent")
         .attr("r", (d)=>{return (d.PTS/6)})
         .attr("cx", (d)=>{return x(d.date)})
@@ -153,18 +153,7 @@ var formatTime = d3.timeFormat("%H:%M:%S");
       // On click, update with new data
   d3.select(".rebs") //TRB
       .on("click", function() {
-        // var numValues = dataset.length;  // Get original dataset's length
-        //   var maxRange = Math.random() * 1000;  // Get max range of new values
-        //   dataset = [];  // Initialize empty array
-        //   for(var i=0; i<numValues; i++) {
-        //       var newNumber1 = Math.floor(Math.random() * maxRange);  // Random int for x
-        //       var newNumber2 = Math.floor(Math.random() * maxRange);  // Random int for y
-        //       dataset.push([newNumber1, newNumber2]);  // Add new numbers to array
-        //   }
 
-          // Update scale domains
-          // xScale.domain([0, d3.max(dataset, function(d) {
-          //     return d[0]; })]);
           y.domain([0, d3.max(data, function(d) {
             return d.TRB; })]);
           // yScale.domain([0, d3.max(dataset, function(d) {
@@ -349,7 +338,8 @@ function updateTable(d) {
     "SEA" : "app/assets/images/sonics.gif",
     "VAN" : "app/assets/images/van-grizz.gif",
     "NJN" : "app/assets/images/NJN.gif",
-    "NOK" : "app/assets/images/NOH.gif"
+    "NOK" : "app/assets/images/NOH.gif",
+    "CHH" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png"
   }
 
   let pts = document.getElementById("tb-pts");
@@ -362,7 +352,6 @@ function updateTable(d) {
   let threept = document.getElementById("tb-threept");
   let ft = document.getElementById("tb-ft");
   let oppImg = document.getElementById("oppImg");
-  debugger;
   pts.innerText = `${d.PTS}`;
   trb.innerText = `${d.TRB}`;
   asts.innerText = `${d.AST}`;
@@ -414,54 +403,133 @@ function type(d) {
     <button type="button" class="rebs">Rebounds</button>
     <button type="button" class="asts">Assists</button>
   </div>
-  <div class="chart-two">
-    <h3>Game Information</h3>
-    <div class="image-container">
-      <img class="headshot" src="https://people.rit.edu/~axd2776/140/project%202/images/kobe%20bryant.png" alt="">
-      <img id="oppImg" class="headshot animated slideInRight">.</img>
+
+  <div class="bottom-container">
+    <div class="chart-two">
+      <h3>Game Information</h3>
+      <div class="image-container">
+        <img class="headshot animated slideInLeft" src="https://people.rit.edu/~axd2776/140/project%202/images/kobe%20bryant.png" alt="">
+        <img id="oppImg" class="headshot animated slideInRight">.</img>
+      </div>
+      <div class="table-container">
+        <table class="table">
+          <tr>
+            <th>Kobe Bryant</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th align="left">Points</th>
+            <td id="tb-pts">N/A</td>
+            <th align="left">FG%</th>
+            <td id="tb-fg">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Rebounds</th>
+            <td id="tb-rebs">N/A</td>
+            <th align="left">FT%</th>
+            <td id="tb-ft">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Assists</th>
+            <td id="tb-asts">N/A</td>
+            <th align="left">3P%</th>
+            <td id="tb-threept">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Steals</th>
+            <td id="tb-stls">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Blocks</th>
+            <td id="tb-blks">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Turnovers</th>
+            <td id="tb-tovs">N/A</td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <table class="table">
-      <tr>
-        <th>Kobe Bryant</th>
-        <td></td>
-      </tr>
-      <tr>
-        <th align="left">Points</th>
-        <td id="tb-pts">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">Rebounds</th>
-        <td id="tb-rebs">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">Assists</th>
-        <td id="tb-asts">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">Steals</th>
-        <td id="tb-stls">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">Blocks</th>
-        <td id="tb-blks">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">Turnovers</th>
-        <td id="tb-tovs">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">FG%</th>
-        <td id="tb-fg">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">FT%</th>
-        <td id="tb-ft">N/A</td>
-      </tr>
-      <tr>
-        <th align="left">3P%</th>
-        <td id="tb-threept">N/A</td>
-      </tr>
-    </table>
+
+    <div class="chart-3">
+      <svg class="svg2" width="1000" height="600"></svg>
+      <script>
+
+      let svg2 = d3.select(".svg2");
+
+      // var projection = d3.geoAlbersUsa()
+      //   .scale(200)
+      //   .translate([width / 2, height / 2]);
+
+      let projection = d3.geoAlbersUsa();
+        // .fitSize([900,600],)
+      //
+        // let path = d3.geoPath();
+      var path = d3.geoPath()
+        .projection(projection);
+
+
+      d3.json("data/us.json", function(error, us) {
+        if (error) throw error;
+
+        debugger;
+
+        // let projection = d3.geoAlbersUsa()
+        //   .fitSize([0,0],[700,300],us)
+        //
+          // let path = d3.geoPath();
+            // .projection(projection);
+
+          svg2.append("g")
+            .attr("class", "states")
+            .selectAll("path")
+            .data(topojson.feature(us, us.objects.states).features)
+            .enter().append("path")
+              .attr("d", path);
+
+          svg2.append("path")
+              .attr("class", "state-borders")
+              .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) {
+                return a !== b; })));
+
+          d3.csv("data/NBA-teams.csv", (data) => {
+            debugger;
+
+            svg2.selectAll(".map-circles")
+              .data(data)
+              .enter()
+                .append("circle")
+                  .attr("class","map-circles")
+                  .attr("cx", function (d) {
+                    const pixelLoc =  projection([d.lon,d.lat]);
+                    return pixelLoc[0];
+                   })
+                  .attr("cy", function (d) {
+                    const pixelLoc =  projection([d.lon,d.lat]);
+                    return pixelLoc[1];
+                   })
+                  .attr("r", "7px")
+                  .attr("fill", "#FDB927")
+                .on("mouseover", function(d) {
+                  tooltip.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+                  tooltip.html(`${d.place} ${d.teamname}`)
+                       .style("left", (d3.event.pageX + 5) + "px")
+                       .style("top", (d3.event.pageY - 28) + "px");
+              })
+              .on("mouseout", function(d) {
+                  tooltip.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+              });
+
+          });
+
+      });
+
+      </script>
+    </div>
   </div>
 
 </body>

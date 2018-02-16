@@ -1,163 +1,753 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style>
-
-.area {
-  fill: #FDB827;
-  clip-path: url(#clip);
-}
-
-.zoom {
-  cursor: move;
-  fill: none;
-  pointer-events: all;
-}
-
-</style>
-<svg width="960" height="500"></svg>
+<link rel="stylesheet" href="/styles/style.css">
+<link rel="stylesheet" href="/styles/style-1.scss">
+<link rel="stylesheet" href="app/assets/javascripts/animate.css">
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script>
+<script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link rel="stylesheet" href="app/assets/javascripts/javascript.js">
+<body>
+  <h1>KB824: Journey of a Legend</h1>
+  <div class="header"><p>Kobe Bryant was one of basketball most endearing superstars of the modern era amassing over 30,000 points, 5 NBA championships, 3 total Most Valuable Player awards (2x Finals, 1x regular season), and even Olympic Gold. He was known for his incredible work ethic and absolute skill and footwork in the game of basketball.
 
-var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 110, left: 40},
-    margin2 = {top: 430, right: 20, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    height2 = +svg.attr("height") - margin2.top - margin2.bottom;
+  KB824 is a web application that will take a look into his illustrious 20 year career with the Los Angeles Lakers.</p></div>
+  <div class="top-display">
+    <div width=1200><svg width="1200" height="500"></svg> </div>
+  <script>
 
-var parseDate = d3.timeParse("%b %Y");
+  var svg = d3.select("svg"),
+      margin = {top: 20, right: 20, bottom: 110, left: 40},
+      margin2 = {top: 430, right: 20, bottom: 30, left: 40},
+      width = +svg.attr("width") - margin.left - margin.right,
+      height = +svg.attr("height") - margin.top - margin.bottom,
+      height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
-var x = d3.scaleTime().range([0, width]),
-    x2 = d3.scaleTime().range([0, width]),
-    y = d3.scaleLinear().range([height, 0]),
-    y2 = d3.scaleLinear().range([height2, 0]);
+  var x = d3.scaleTime().range([0, width]),
+      x2 = d3.scaleTime().range([0, width]),
+      y = d3.scaleLinear().range([height, 0]),
+      y2 = d3.scaleLinear().range([height2, 0]);
 
-var xAxis = d3.axisBottom(x),
-    xAxis2 = d3.axisBottom(x2),
-    yAxis = d3.axisLeft(y);
+  var xAxis = d3.axisBottom(x),
+      xAxis2 = d3.axisBottom(x2),
+      yAxis = d3.axisLeft(y);
 
-var brush = d3.brushX()
-    .extent([[0, 0], [width, height2]])
-    .on("brush end", brushed);
 
-var zoom = d3.zoom()
-    .scaleExtent([1, Infinity])
-    .translateExtent([[0, 0], [width, height]])
-    .extent([[0, 0], [width, height]])
-    .on("zoom", zoomed);
 
-var area = d3.area()
-    .curve(d3.curveMonotoneX)
-    .x(function(d) { return x(d.date); })
-    .y0(height)
-    .y1(function(d) { return y(d.PTS); });
+  var brush = d3.brushX()
+      .extent([[0, 0], [width, height2]])
+      .on("brush end", brushed);
 
-var area2 = d3.area()
-    .curve(d3.curveMonotoneX)
-    .x(function(d) { return x2(d.date); })
-    .y0(height2)
-    .y1(function(d) { return y2(d.PTS); });
+  var zoom = d3.zoom()
+      .scaleExtent([1, Infinity])
+      .translateExtent([[0, 0], [width, height]])
+      .extent([[0, 0], [width, height]])
+      .on("zoom", zoomed);
 
-svg.append("defs").append("clipPath")
-    .attr("id", "clip")
-  .append("rect")
-    .attr("width", width)
-    .attr("height", height);
+  var area = d3.area()
+      .curve(d3.curveMonotoneX)
+      .x(function(d) { return x(d.date); })
+      .y0(height)
+      .y1(function(d) { return y(d.PTS); });
 
-var focus = svg.append("g")
-    .attr("class", "focus")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var area2 = d3.area()
+      .curve(d3.curveMonotoneX)
+      .x(function(d) { return x2(d.date); })
+      .y0(height2)
+      .y1(function(d) { return y2(d.PTS); });
 
-var context = svg.append("g")
-    .attr("class", "context")
-    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
-
-d3.csv("./data/kobe-playoff1.csv", type, function(error, data) {
-  if (error) throw error;
-
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.PTS; })]);
-  x2.domain(x.domain());
-  y2.domain(y.domain());
-
-  debugger;
-
-  let fixedData ={};
-  let arr = [];
-  data.forEach((d)=>{
-    fixedData["date"] = d.date;
-    fixedData["PTS"] = d.PTS;
-    arr.push(fixedData);
-    fixedData = {};
-  })
-
-  debugger;
-
-  focus.append("path")
-      .datum(arr)
-      .attr("class", "area")
-      .attr("d", area);
-
-  focus.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  focus.append("g")
-      .attr("class", "axis axis--y")
-      .call(yAxis);
-
-  context.append("path")
-      .datum(data)
-      .attr("class", "area")
-      .attr("d", area2);
-
-  context.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height2 + ")")
-      .call(xAxis2);
-
-  context.append("g")
-      .attr("class", "brush")
-      .call(brush)
-      .call(brush.move, x.range());
-
-  svg.append("rect")
-      .attr("class", "zoom")
+  svg.append("defs").append("clipPath")
+      .attr("id", "clip")
+    .append("rect")
       .attr("width", width)
-      .attr("height", height)
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .call(zoom);
-});
+      .attr("height", height);
 
-function brushed() {
-  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
-  var s = d3.event.selection || x2.range();
-  x.domain(s.map(x2.invert, x2));
-  focus.select(".area").attr("d", area);
-  focus.select(".axis--x").call(xAxis);
-  svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
-      .scale(width / (s[1] - s[0]))
-      .translate(-s[0], 0));
-}
+  var focus = svg.append("g")
+      .attr("class", "focus")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-function zoomed() {
-  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
-  var t = d3.event.transform;
-  x.domain(t.rescaleX(x2).domain());
-  focus.select(".area").attr("d", area);
-  focus.select(".axis--x").call(xAxis);
-  context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
-}
+  var context = svg.append("g")
+      .attr("class", "context")
+      .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-function type(d) {
-  // d.date = parseDate(d.date);
-  // d.price = +d.price;
-  // d.date = new Date(d.Date);
-  d.date = Date.parse(d.Date);
-  d.PTS = +d.PTS;
-  return d;
-}
+  var tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
 
-</script>
+  d3.csv("./data/kobe-reg-games-log.csv", type, function(error, data) {
+    if (error) throw error;
+
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return d.PTS; })]);
+    x2.domain(x.domain());
+    y2.domain(y.domain());
+
+
+    let fixedData ={};
+    let arr = [];
+    data.forEach((d)=>{
+      fixedData["date"] = d.date;
+      fixedData["PTS"] = d.PTS;
+      arr.push(fixedData);
+      fixedData = {};
+    })
+
+    //
+    // focus.append("path")
+    //     .datum(arr)
+    //     .attr("class", "area")
+    //     .attr("d", area);
+
+    // *** Parse the date / time
+  var formatTime = d3.timeFormat("%H:%M:%S");
+
+    // draw dots
+    focus.selectAll("circle")
+        .data(data)
+        .enter().append("circle")
+          .attr("class", "gameEvent")
+          .attr("r", (d)=>{return (d.PTS/6)})
+          .attr("cx", (d)=>{return x(d.date)})
+          .attr("cy", (d)=>{return y(d.PTS)})
+          .attr("fill", "#552583")
+          .on("click", (d)=>{
+            updateTable(d);
+          })
+          .on("mouseover", function(d) {
+            tooltip.transition()
+                 .duration(200)
+                 .style("opacity", .9);
+            tooltip.html(`Kobe scored ${d.PTS} points, grab ${d.TRB} rebounds, and dished out ${d.AST} assists against the ${d.Opp} on ${d.Date}.`)
+                 .style("left", (d3.event.pageX + 5) + "px")
+                 .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            tooltip.transition()
+                 .duration(500)
+                 .style("opacity", 0);
+        });
+
+    focus.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    focus.append("g")
+        .attr("class", "axis axis--y")
+        .call(yAxis);
+
+    context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", area2);
+
+    context.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(xAxis2);
+
+    context.append("g")
+        .attr("class", "brush")
+        .call(brush)
+        .call(brush.move, x.range());
+
+    focus.append("g")
+        .attr("class", "zoom")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(zoom);
+
+        // On click, update with new data
+    d3.select(".rebs") //TRB
+        .on("click", function() {
+
+            y.domain([0, d3.max(data, function(d) {
+              return d.TRB; })]);
+            // yScale.domain([0, d3.max(dataset, function(d) {
+            //     return d[1]; })]);
+
+            // Update circles
+            svg.selectAll("circle")
+                .data(data)  // Update with new data
+                .transition()  // Transition from old to new
+                .duration(1000)  // Length of animation
+                .on("start", function() {  // Start animation
+                    d3.select(this)  // 'this' means the current element
+                        // .style("fill", "#552583")
+                        .attr("fill", "#FDB927")  // Change color
+                        .attr("r", 5);  // Change size
+                })
+                .delay(function(d, i) {
+                    return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                })
+                //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                .attr("cx", function(d) {
+                    return x(d.date);  // Circle's X
+                })
+                .attr("cy", function(d) {
+                    return y(d.TRB);  // Circle's Y
+                })
+                .on("end", function() {  // End animation
+                    d3.select(this)  // 'this' means the current element
+                        .transition()
+                        .duration(500)
+                        .attr("fill", "#552583")
+                        // .attr("fill", "black")  // Change color
+                        .attr("stroke","black")
+                        .attr("stroke-width","0")
+                        .attr("r", (d)=>{return (d.TRB/1.6)});  // Change radius
+                });
+
+                // Update X Axis
+                svg.select(".axis--x")
+                    .transition()
+                    .duration(1000)
+                    .call(xAxis);
+
+                // Update Y Axis
+                svg.select(".axis--y")
+                    .transition()
+                    .duration(100)
+                    .call(yAxis);
+        });
+
+        // On click, update with new data
+    d3.select(".pts") //Points
+        .on("click", function() {
+            y.domain([0, d3.max(data, function(d) {
+              return d.PTS; })]);
+
+            // Update circles
+            svg.selectAll("circle")
+                .data(data)  // Update with new data
+                .transition()  // Transition from old to new
+                .duration(1000)  // Length of animation
+                .on("start", function() {  // Start animation
+                    d3.select(this)  // 'this' means the current element
+                        .attr("fill", "#FDB927")
+                        // .attr("fill", "red")  // Change color
+                        .attr("r", 5);  // Change size
+                })
+                .delay(function(d, i) {
+                    return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                })
+                //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                .attr("cx", function(d) {
+                    return x(d.date);  // Circle's X
+                })
+                .attr("cy", function(d) {
+                    return y(d.PTS);  // Circle's Y
+                })
+                .on("end", function() {  // End animation
+                    d3.select(this)  // 'this' means the current element
+                        .transition()
+                        .duration(500)
+                        .attr("fill", "#552583")
+                        // .attr("fill", "black")  // Change color
+                        .attr("r", (d)=>{return (d.PTS/6)});  // Change radius
+                });
+
+                // Update X Axis
+                svg.select(".axis--x")
+                    .transition()
+                    .duration(1000)
+                    .call(xAxis);
+
+                // Update Y Axis
+                svg.select(".axis--y")
+                    .transition()
+                    .duration(100)
+                    .call(yAxis);
+        });
+
+        // On click, update with new data
+    d3.select(".asts") //Assists
+        .on("click", function() {
+            y.domain([0, d3.max(data, function(d) {
+              return d.AST; })]);
+
+            // Update circles
+            svg.selectAll("circle")
+                .data(data)  // Update with new data
+                .transition()  // Transition from old to new
+                .duration(1000)  // Length of animation
+                .on("start", function() {  // Start animation
+                    d3.select(this)  // 'this' means the current element
+                        .attr("fill", "#FDB927")
+                        // .attr("fill", "red")  // Change color
+                        .attr("r", 5);  // Change size
+                })
+                .delay(function(d, i) {
+                    return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                })
+                //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                .attr("cx", function(d) {
+                    return x(d.date);  // Circle's X
+                })
+                .attr("cy", function(d) {
+                    return y(d.AST);  // Circle's Y
+                })
+                .on("end", function() {  // End animation
+                    d3.select(this)  // 'this' means the current element
+                        .transition()
+                        .duration(500)
+                        .attr("fill", "#552583")
+                        // .attr("fill", "black")  // Change color
+                        .attr("r", (d)=>{return (d.AST/1.3)});  // Change radius
+                });
+
+                // Update X Axis
+                svg.select(".axis--x")
+                    .transition()
+                    .duration(1000)
+                    .call(xAxis);
+
+                // Update Y Axis
+                svg.select(".axis--y")
+                    .transition()
+                    .duration(100)
+                    .call(yAxis);
+        });
+
+        // On click, update with new data
+    d3.select(".rebs") //TRB
+        .on("click", function() {
+
+            y.domain([0, d3.max(data, function(d) {
+              return d.TRB; })]);
+            // yScale.domain([0, d3.max(dataset, function(d) {
+            //     return d[1]; })]);
+
+            // Update circles
+            svg.selectAll("circle")
+                .data(data)  // Update with new data
+                .transition()  // Transition from old to new
+                .duration(1000)  // Length of animation
+                .on("start", function() {  // Start animation
+                    d3.select(this)  // 'this' means the current element
+                        // .style("fill", "#552583")
+                        .attr("fill", "#FDB927")  // Change color
+                        .attr("r", 5);  // Change size
+                })
+                .delay(function(d, i) {
+                    return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                })
+                //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                .attr("cx", function(d) {
+                    return x(d.date);  // Circle's X
+                })
+                .attr("cy", function(d) {
+                    return y(d.TRB);  // Circle's Y
+                })
+                .on("end", function() {  // End animation
+                    d3.select(this)  // 'this' means the current element
+                        .transition()
+                        .duration(500)
+                        .attr("fill", "#552583")
+                        // .attr("fill", "black")  // Change color
+                        .attr("stroke","black")
+                        .attr("stroke-width","0")
+                        .attr("r", (d)=>{return (d.TRB/1.6)});  // Change radius
+                });
+
+                // Update X Axis
+                svg.select(".axis--x")
+                    .transition()
+                    .duration(1000)
+                    .call(xAxis);
+
+                // Update Y Axis
+                svg.select(".axis--y")
+                    .transition()
+                    .duration(100)
+                    .call(yAxis);
+        });
+
+        // On click, update with new data
+    d3.select(".blks") //Blocks
+        .on("click", function() {
+            y.domain([0, d3.max(data, function(d) {
+              return d.BLK; })]);
+
+            // Update circles
+            svg.selectAll("circle")
+                .data(data)  // Update with new data
+                .transition()  // Transition from old to new
+                .duration(1000)  // Length of animation
+                .on("start", function() {  // Start animation
+                    d3.select(this)  // 'this' means the current element
+                        .attr("fill", "#FDB927")
+                        // .attr("fill", "red")  // Change color
+                        .attr("r", 5);  // Change size
+                })
+                .delay(function(d, i) {
+                    return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                })
+                //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                .attr("cx", function(d) {
+                    return x(d.date);  // Circle's X
+                })
+                .attr("cy", function(d) {
+                    return y(d.BLK);  // Circle's Y
+                })
+                .on("end", function() {  // End animation
+                    d3.select(this)  // 'this' means the current element
+                        .transition()
+                        .duration(500)
+                        .attr("fill", "#552583")
+                        // .attr("fill", "black")  // Change color
+                        .attr("r", (d)=>{return (d.BLK/.4)});  // Change radius
+                });
+
+                // Update X Axis
+                svg.select(".axis--x")
+                    .transition()
+                    .duration(1000)
+                    .call(xAxis);
+
+                // Update Y Axis
+                svg.select(".axis--y")
+                    .transition()
+                    .duration(100)
+                    .call(yAxis);
+        });
+
+        d3.select(".stls") //Steals
+            .on("click", function() {
+                y.domain([0, d3.max(data, function(d) {
+                  return d.STL; })]);
+
+                // Update circles
+                svg.selectAll("circle")
+                    .data(data)  // Update with new data
+                    .transition()  // Transition from old to new
+                    .duration(1000)  // Length of animation
+                    .on("start", function() {  // Start animation
+                        d3.select(this)  // 'this' means the current element
+                            .attr("fill", "#FDB927")
+                            // .attr("fill", "red")  // Change color
+                            .attr("r", 5);  // Change size
+                    })
+                    .delay(function(d, i) {
+                        return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                    })
+                    //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                    .attr("cx", function(d) {
+                        return x(d.date);  // Circle's X
+                    })
+                    .attr("cy", function(d) {
+                        return y(d.STL);  // Circle's Y
+                    })
+                    .on("end", function() {  // End animation
+                        d3.select(this)  // 'this' means the current element
+                            .transition()
+                            .duration(500)
+                            .attr("fill", "#552583")
+                            // .attr("fill", "black")  // Change color
+                            .attr("r", (d)=>{return (d.STL/.6)});  // Change radius
+                    });
+
+                    // Update X Axis
+                    svg.select(".axis--x")
+                        .transition()
+                        .duration(1000)
+                        .call(xAxis);
+
+                    // Update Y Axis
+                    svg.select(".axis--y")
+                        .transition()
+                        .duration(100)
+                        .call(yAxis);
+            });
+
+      d3.select(".tovs") //Turnovers
+          .on("click", function() {
+              y.domain([0, d3.max(data, function(d) {
+                return d.TOV; })]);
+
+              // Update circles
+              svg.selectAll("circle")
+                  .data(data)  // Update with new data
+                  .transition()  // Transition from old to new
+                  .duration(1000)  // Length of animation
+                  .on("start", function() {  // Start animation
+                      d3.select(this)  // 'this' means the current element
+                          .attr("fill", "#FDB927")
+                          // .attr("fill", "red")  // Change color
+                          .attr("r", 5);  // Change size
+                  })
+                  .delay(function(d, i) {
+                      return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                  })
+                  //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                  .attr("cx", function(d) {
+                      return x(d.date);  // Circle's X
+                  })
+                  .attr("cy", function(d) {
+                      return y(d.TOV);  // Circle's Y
+                  })
+                  .on("end", function() {  // End animation
+                      d3.select(this)  // 'this' means the current element
+                          .transition()
+                          .duration(500)
+                          .attr("fill", "#552583")
+                          // .attr("fill", "black")  // Change color
+                          .attr("r", (d)=>{return (d.TOV)});  // Change radius
+                  });
+
+                  // Update X Axis
+                  svg.select(".axis--x")
+                      .transition()
+                      .duration(1000)
+                      .call(xAxis);
+
+                  // Update Y Axis
+                  svg.select(".axis--y")
+                      .transition()
+                      .duration(100)
+                      .call(yAxis);
+          });
+
+  });
+
+  function updateTable(d) {
+    let teamLogo = {
+      "ATL" : "app/assets/images/9168_atlanta_hawks-primary-2016.png",
+      "BRK" : "app/assets/images/137_brooklyn-nets-primary-2013.png",
+      "CHA" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
+      "DET" : "app/assets/images/2164_detroit_pistons-primary-2018.png",
+      "SAS" : "app/assets/images/2547_san_antonio_spurs-primary-2018.png",
+      "NOH" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
+      "DAL" : "app/assets/images/3463_dallas_mavericks-primary-2018.png",
+      "SAC" : "app/assets/images/4043_sacramento_kings-primary-2017.png",
+      "PHO" : "app/assets/images/4370_phoenix_suns-primary-2014.png",
+      "TOR": "app/assets/images/4578_toronto_raptors-primary-2016.png",
+      "IND": "app/assets/images/4812_indiana_pacers-primary-2018.png",
+      "LAC" : "app/assets/images/5462_los_angeles_clippers-primary-2016.png",
+      "WAS" : "app/assets/images/5671_washington_wizards-primary-2016.png",
+      "CLE" : "app/assets/images/6921_cleveland_cavaliers-primary-2018.png",
+      "PHI" : "app/assets/images/7034_philadelphia_76ers-primary-2016.png",
+      "MIL": "app/assets/images/8275_milwaukee_bucks-primary-2016.png",
+      "MIN" : "app/assets/images/9669_minnesota_timberwolves-primary-2018.png",
+      "POR" : "app/assets/images/9725_portland_trail_blazers-primary-2018.png",
+      "BOS" : "app/assets/images/boston.png",
+      "CHI" : "app/assets/images/bulls.png",
+      "DEN" : "app/assets/images/denver.gif",
+      "MEM" : "app/assets/images/grizz.gif",
+      "MIA" : "app/assets/images/heat.gif",
+      "NYK" : "app/assets/images/knicks.gif",
+      "ORL" : "app/assets/images/magics.gif",
+      "OKC" : "app/assets/images/okc.png",
+      "HOU" : "app/assets/images/rockets.gif",
+      "GSW" : "app/assets/images/warriors.png",
+      "UTA" :  "app/assets/images/6749_utah_jazz-primary-2017.png",
+      "NOH" : "app/assets/images/NOH.gif",
+      "SEA" : "app/assets/images/sonics.gif",
+      "VAN" : "app/assets/images/van-grizz.gif",
+      "NJN" : "app/assets/images/NJN.gif",
+      "NOK" : "app/assets/images/NOH.gif",
+      "CHH" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png"
+    }
+
+    let pts = document.getElementById("tb-pts");
+    let trb = document.getElementById("tb-rebs");
+    let asts = document.getElementById("tb-asts");
+    let stls = document.getElementById("tb-stls");
+    let blks = document.getElementById("tb-blks");
+    let tovs = document.getElementById("tb-tovs");
+    let fg = document.getElementById("tb-fg");
+    let threept = document.getElementById("tb-threept");
+    let ft = document.getElementById("tb-ft");
+    let oppImg = document.getElementById("oppImg");
+    pts.innerText = `${d.PTS}`;
+    trb.innerText = `${d.TRB}`;
+    asts.innerText = `${d.AST}`;
+    stls.innerText = `${d.STL}`;
+    blks.innerText = `${d.BLK}`;
+    tovs.innerText = `${d.TOV}`;
+    fg.innerText = `${((d.FG / d.FGA) * 100).toFixed(1) + "%"}`;
+    threept.innerText = `${((d["3P"] / d["3PA"]) * 100).toFixed(1) + "%"}`;
+    ft.innerText = `${((d.FT / d.FTA) * 100).toFixed(1) + "%"}`;
+    oppImg.src = teamLogo[d.Opp]
+  }
+
+  function brushed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+    var s = d3.event.selection || x2.range();
+    x.domain(s.map(x2.invert, x2));
+    focus.select(".area").attr("d", area);
+    focus.select(".axis--x").call(xAxis);
+    svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+        .scale(width / (s[1] - s[0]))
+        .translate(-s[0], 0));
+  }
+
+  function zoomed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+    var t = d3.event.transform;
+    x.domain(t.rescaleX(x2).domain());
+    focus.select(".area").attr("d", area);
+    focus.select(".axis--x").call(xAxis);
+    context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
+  }
+
+  function type(d) {
+    // d.date = parseDate(d.date);
+    // d.price = +d.price;
+    // d.date = new Date(d.Date);
+    d.date = Date.parse(d.Date);
+    d.PTS = +d.PTS;
+    d.TRB = +d.TRB;
+    d.AST= +d.AST;
+    return d;
+  }
+
+  </script>
+
+    <div class="chart1-bttn">
+      <p>Display Kobe's career data on:</p>
+      <button type="button" class="pts large blue button">Points</button>
+      <button type="button" class="rebs large blue button">Rebounds</button>
+      <button type="button" class="asts large blue button">Assists</button>
+      <button type="button" class="blks large blue button">Blocks</button>
+      <button type="button" class="stls large blue button">Steals</button>
+      <button type="button" class="tovs large blue button">Turnovers</button>
+    </div>
+</div>
+  <div class="bottom-container">
+    <div class="chart-two">
+      <h3>Game Information</h3>
+      <div class="image-container">
+        <img class="headshot animated slideInLeft" src="https://people.rit.edu/~axd2776/140/project%202/images/kobe%20bryant.png" alt="">
+        <img id="oppImg" class="headshot animated slideInRight">.</img>
+      </div>
+      <div class="table-container">
+        <table class="table">
+          <tr>
+            <th>Kobe Bryant</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th align="left">Points</th>
+            <td id="tb-pts">N/A</td>
+            <td></td>
+            <th align="left">FG%</th>
+            <td id="tb-fg">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Rebounds</th>
+            <td id="tb-rebs">N/A</td>
+            <td></td>
+            <th align="left">FT%</th>
+            <td id="tb-ft">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Assists</th>
+            <td id="tb-asts">N/A</td>
+            <td></td>
+            <th align="left">3P%</th>
+            <td id="tb-threept">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Steals</th>
+            <td id="tb-stls">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Blocks</th>
+            <td id="tb-blks">N/A</td>
+          </tr>
+          <tr>
+            <th align="left">Turnovers</th>
+            <td id="tb-tovs">N/A</td>
+          </tr>
+        </table>
+      </div>
+      <div class="game-info-text">
+        <p>Click on the game events in the <strong>scatterplot</strong> above to get a detailed look into Kobe's performance from that game</p>
+      </div>
+
+    </div>
+
+    <div class="chart-3">
+      <svg class="svg2" width="1000" height="600"></svg>
+      <script>
+
+      let svg2 = d3.select(".svg2");
+
+      // var projection = d3.geoAlbersUsa()
+      //   .scale(200)
+      //   .translate([width / 2, height / 2]);
+
+      let projection = d3.geoAlbersUsa();
+        // .fitSize([900,600],)
+      //
+        // let path = d3.geoPath();
+      var path = d3.geoPath()
+        .projection(projection);
+
+
+      d3.json("data/us.json", function(error, us) {
+        if (error) throw error;
+
+
+        // let projection = d3.geoAlbersUsa()
+        //   .fitSize([0,0],[700,300],us)
+        //
+          // let path = d3.geoPath();
+            // .projection(projection);
+
+          svg2.append("g")
+            .attr("class", "states")
+            .selectAll("path")
+            .data(topojson.feature(us, us.objects.states).features)
+            .enter().append("path")
+              .attr("d", path);
+
+          svg2.append("path")
+              .attr("class", "state-borders")
+              .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) {
+                return a !== b; })));
+
+          d3.csv("data/NBA-teams.csv", (data) => {
+
+            svg2.selectAll(".map-circles")
+              .data(data)
+              .enter()
+                .append("circle")
+                  .attr("class","map-circles")
+                  .attr("cx", function (d) {
+                    const pixelLoc =  projection([d.lon,d.lat]);
+                    return pixelLoc[0];
+                   })
+                  .attr("cy", function (d) {
+                    const pixelLoc =  projection([d.lon,d.lat]);
+                    return pixelLoc[1];
+                   })
+                  .attr("r", "7px")
+                  .attr("fill", "#FDB927")
+                .on("mouseover", function(d) {
+                  tooltip.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+                  tooltip.html(`${d.place} ${d.teamname}`)
+                       .style("left", (d3.event.pageX + 5) + "px")
+                       .style("top", (d3.event.pageY - 28) + "px");
+              })
+              .on("mouseout", function(d) {
+                  tooltip.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+              });
+
+          });
+
+      });
+
+      </script>
+
+    </div>
+  </div>
+
+</body>
