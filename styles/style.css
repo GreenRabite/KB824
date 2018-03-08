@@ -1,8 +1,30 @@
+#splash-page{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url(../app/assets/images/other_images/dear.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .chart-two{
   border: 1px solid black;
   width: 350px;
-  height: 450px;
+  height: 475px;
   margin-top: 20px;
+  z-index: -1;
+  margin-left: 20px;
+  margin-right: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #552583;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FDB927, #552583);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FDB927, #552583); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 .headshot{
@@ -12,15 +34,31 @@
   object-fit: cover;
   -webkit-filter: drop-shadow(5px 5px 5px #222 );
   filter: drop-shadow(2.5px 5px 5px #222);
-  /*margin-top: 18px;*/
+  margin-top: 18px;
   margin-left: 30px;
 }
 
 .chart1-bttn{
   display: flex;
   flex-direction: column;
-  width: 400px;
-  height: 400px;
+  /*height: 400px;
+  max-width: 200px;*/
+  width: 200px;
+  height: 475px;
+  /*background-color: #FDB927;*/
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #552583;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #552583, #FDB927);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right,#552583,#FDB927); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /*background-color: linear-gradient(to right, #FDB927, #552583);*/
+  /*border: 1px solid red;*/
+}
+
+.words{
+  color: white;
+  font-weight: bold;
 }
 
 .image-container {
@@ -58,9 +96,11 @@ div.tooltip {
   margin-top: 20px;
 }
 
-.chart-two{
+/*.chart-two{
   margin-left: 20px;
-}
+  margin-right: 30px;
+  background-color: linear-gradient(to right, #FDB927, #552583);
+}*/
 
 .gameEvent:hover{
   cursor: pointer;
@@ -105,6 +145,7 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  z-index:-1;
 }
 
 html{
@@ -132,12 +173,16 @@ h3{
 .top-display{
   display: flex;
   justify-content: flex-start;
+  width: 100%;
+}
+
+.top-container{
+  display: flex;
+  justify-content: flex-start;
+  /*background-color: linear-gradient(to right, #FDB927, #552583);*/
 }
 
 /* Button CSS */
-body{
-    background:url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/wild_oliva.png);
-}
 .centered {
   margin:50px auto;
   text-align:center;
@@ -300,16 +345,16 @@ body{
 }
 
 .button.blue:active{
-  background: #562790;
+  background: #552583;
   border-color: #552583;
 }
 
 /* */
 
 .green[disabled], .green[disabled]:hover, .green[disabled]:active{
-  border-color: #57A957;
-  background: #57A957;
-  color: #D2FFD2;
+  border-color: #552583;
+  background: #552583;
+  color: #552583;
 }
 
 .red[disabled], .red[disabled]:hover, .red[disabled]:active{

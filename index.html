@@ -1,21 +1,99 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<link rel="stylesheet" href="./styles/style.css">
 <link rel="stylesheet" href="./styles/style-1.scss">
+<link rel="stylesheet" href="./styles/style.css">
 <link rel="stylesheet" href="app/assets/javascripts/animate.css">
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
 <link rel="stylesheet" href="app/assets/javascripts/javascript.js">
 <body>
   <h1>KB824: Journey of a Legend</h1>
+  <div id="splash-page"></div>
   <div class="header"><p>Kobe Bryant was one of basketball most endearing superstars of the modern era amassing over 30,000 points, 5 NBA championships, 3 total Most Valuable Player awards (2x Finals, 1x regular season), and even Olympic Gold. He was known for his incredible work ethic and absolute skill and footwork in the game of basketball.
 
   KB824 is a web application that will take a look into his illustrious 20 year career with the Los Angeles Lakers.</p></div>
   <div class="top-display">
-    <div width=1200><svg width="1200" height="500"></svg> </div>
+    <div width=1000><svg width="1000" height="600"></svg> </div>
+
+    <div class="top-container">
+      <div class="chart-two">
+        <h3>Game Information</h3>
+        <div class="image-container">
+          <img class="headshot animated slideInLeft" src="https://people.rit.edu/~axd2776/140/project%202/images/kobe%20bryant.png" alt="">
+          <img id="oppImg" class="headshot animated slideInRight">.</img>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <tr>
+              <th>Kobe Bryant</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th align="left">Points</th>
+              <td id="tb-pts">N/A</td>
+              <td></td>
+              <th align="left">FG%</th>
+              <td id="tb-fg">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Rebounds</th>
+              <td id="tb-rebs">N/A</td>
+              <td></td>
+              <th align="left">FT%</th>
+              <td id="tb-ft">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Assists</th>
+              <td id="tb-asts">N/A</td>
+              <td></td>
+              <th align="left">3P%</th>
+              <td id="tb-threept">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Steals</th>
+              <td id="tb-stls">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Blocks</th>
+              <td id="tb-blks">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Turnovers</th>
+              <td id="tb-tovs">N/A</td>
+            </tr>
+          </table>
+          </div>
+          <div class="game-info-text">
+            <p>Click on the game events in the <strong>scatterplot</strong> shown to the left to get a detailed look into Kobe's performance from that game</p>
+        </div>
+      </div>
+      <div class="chart1-bttn">
+        <div class="words"><p>Display Kobe's career data on:</p></div>
+        <button type="button" class="pts large blue button">Points</button>
+        <button type="button" class="rebs large blue button">Rebounds</button>
+        <button type="button" class="asts large blue button">Assists</button>
+        <button type="button" class="blks large blue button">Blocks</button>
+        <button type="button" class="stls large blue button">Steals</button>
+        <button type="button" class="tovs large blue button">Turnovers</button>
+        <button type="button" class="gmsc large blue button">Efficiency</button>
+      </div>
+    </div>
+
+  </div>
   <script>
+  // $(document).ready(function () {
+  //   setTimeout(function () {
+  //       $('#splash-page').hide();
+  //   }, 1000);
+  // });
+
+  $('#splash-page').fadeOut(4000);
 
   var svg = d3.select("svg"),
       margin = {top: 20, right: 20, bottom: 110, left: 40},
@@ -51,11 +129,11 @@
       .y0(height)
       .y1(function(d) { return y(d.PTS); });
 
-  var area2 = d3.area()
-      .curve(d3.curveMonotoneX)
-      .x(function(d) { return x2(d.date); })
-      .y0(height2)
-      .y1(function(d) { return y2(d.PTS); });
+  // var area2 = d3.area()
+  //     .curve(d3.curveMonotoneX)
+  //     .x(function(d) { return x2(d.date); })
+  //     .y0(height2)
+  //     .y1(function(d) { return y2(d.PTS); });
 
   svg.append("defs").append("clipPath")
       .attr("id", "clip")
@@ -77,7 +155,7 @@
 
   d3.csv("./data/kobe-reg-games-log.csv", type, function(error, data) {
     if (error) throw error;
-
+    console.log(data);
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([0, d3.max(data, function(d) { return d.PTS; })]);
     x2.domain(x.domain());
@@ -107,6 +185,7 @@
         .data(data)
         .enter().append("circle")
           .attr("class", "gameEvent")
+          // .attr("class", "area")
           .attr("r", (d)=>{return (d.PTS/6)})
           .attr("cx", (d)=>{return x(d.date)})
           .attr("cy", (d)=>{return y(d.PTS)})
@@ -117,8 +196,8 @@
           .on("mouseover", function(d) {
             tooltip.transition()
                  .duration(200)
-                 .style("opacity", .9);
-            tooltip.html(`Kobe scored ${d.PTS} points, grab ${d.TRB} rebounds, and dished out ${d.AST} assists against the ${d.Opp} on ${d.Date}.`)
+                 .style("opacity", 1);
+            tooltip.html(`Kobe scored ${d.PTS} points against the ${d.Opp} on ${d.Date}.`)
                  .style("left", (d3.event.pageX + 5) + "px")
                  .style("top", (d3.event.pageY - 28) + "px");
         })
@@ -137,27 +216,27 @@
         .attr("class", "axis axis--y")
         .call(yAxis);
 
-    context.append("path")
-        .datum(data)
-        .attr("class", "area")
-        .attr("d", area2);
+    // context.append("path")
+    //     .datum(data)
+    //     .attr("class", "area")
+    //     .attr("d", area2);
 
-    context.append("g")
-        .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + height2 + ")")
-        .call(xAxis2);
+    // context.append("g")
+    //     .attr("class", "axis axis--x")
+    //     .attr("transform", "translate(0," + height2 + ")")
+    //     .call(xAxis2);
 
-    context.append("g")
-        .attr("class", "brush")
-        .call(brush)
-        .call(brush.move, x.range());
+    // context.append("g")
+    //     .attr("class", "brush")
+    //     .call(brush)
+    //     .call(brush.move, x.range());
 
-    focus.append("g")
-        .attr("class", "zoom")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-        .call(zoom);
+    // focus.append("g")
+    //     .attr("class", "zoom")
+    //     .attr("width", width)
+    //     .attr("height", height)
+    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    //     .call(zoom);
 
         // On click, update with new data
     d3.select(".rebs") //TRB
@@ -414,7 +493,7 @@
                     .call(yAxis);
         });
 
-        d3.select(".stls") //Steals
+    d3.select(".stls") //Steals
             .on("click", function() {
                 y.domain([0, d3.max(data, function(d) {
                   return d.STL; })]);
@@ -461,6 +540,54 @@
                         .duration(100)
                         .call(yAxis);
             });
+    d3.select(".gmsc") // Game Score
+        .on("click", function() {
+            debugger;
+            y.domain([0, d3.max(data, function(d) {
+              return d.GmSc; })]);
+
+            // Update circles
+            svg.selectAll("circle")
+                .data(data)  // Update with new data
+                .transition()  // Transition from old to new
+                .duration(1000)  // Length of animation
+                .on("start", function() {  // Start animation
+                    d3.select(this)  // 'this' means the current element
+                        .attr("fill", "#FDB927")
+                        // .attr("fill", "red")  // Change color
+                        .attr("r", 5);  // Change size
+                })
+                .delay(function(d, i) {
+                    return i / data.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                })
+                //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                .attr("cx", function(d) {
+                    return x(d.date);  // Circle's X
+                })
+                .attr("cy", function(d) {
+                    return y(d.GmSc);  // Circle's Y
+                })
+                .on("end", function() {  // End animation
+                    d3.select(this)  // 'this' means the current element
+                        .transition()
+                        .duration(500)
+                        .attr("fill", "#552583")
+                        // .attr("fill", "black")  // Change color
+                        .attr("r", (d)=>{return (d.GmSc/5)});  // Change radius
+                });
+
+                // Update X Axis
+                svg.select(".axis--x")
+                    .transition()
+                    .duration(1000)
+                    .call(xAxis);
+
+                // Update Y Axis
+                svg.select(".axis--y")
+                    .transition()
+                    .duration(100)
+                    .call(yAxis);
+        });
 
       d3.select(".tovs") //Turnovers
           .on("click", function() {
@@ -491,7 +618,7 @@
                   .on("end", function() {  // End animation
                       d3.select(this)  // 'this' means the current element
                           .transition()
-                          .duration(500)
+                          .duration(700)
                           .attr("fill", "#552583")
                           // .attr("fill", "black")  // Change color
                           .attr("r", (d)=>{return (d.TOV)});  // Change radius
@@ -517,9 +644,11 @@
       "ATL" : "app/assets/images/9168_atlanta_hawks-primary-2016.png",
       "BRK" : "app/assets/images/137_brooklyn-nets-primary-2013.png",
       "CHA" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
+      "CHO" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
       "DET" : "app/assets/images/2164_detroit_pistons-primary-2018.png",
       "SAS" : "app/assets/images/2547_san_antonio_spurs-primary-2018.png",
       "NOH" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
+      "NOP" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
       "DAL" : "app/assets/images/3463_dallas_mavericks-primary-2018.png",
       "SAC" : "app/assets/images/4043_sacramento_kings-primary-2017.png",
       "PHO" : "app/assets/images/4370_phoenix_suns-primary-2014.png",
@@ -601,77 +730,18 @@
     d.PTS = +d.PTS;
     d.TRB = +d.TRB;
     d.AST= +d.AST;
+    d.GmSc = +d.GmSc
     return d;
   }
 
   </script>
 
-    <div class="chart1-bttn">
-      <p>Display Kobe's career data on:</p>
-      <button type="button" class="pts large blue button">Points</button>
-      <button type="button" class="rebs large blue button">Rebounds</button>
-      <button type="button" class="asts large blue button">Assists</button>
-      <button type="button" class="blks large blue button">Blocks</button>
-      <button type="button" class="stls large blue button">Steals</button>
-      <button type="button" class="tovs large blue button">Turnovers</button>
-    </div>
-</div>
   <div class="bottom-container">
-    <div class="chart-two">
-      <h3>Game Information</h3>
-      <div class="image-container">
-        <img class="headshot animated slideInLeft" src="https://people.rit.edu/~axd2776/140/project%202/images/kobe%20bryant.png" alt="">
-        <img id="oppImg" class="headshot animated slideInRight">.</img>
-      </div>
-      <div class="table-container">
-        <table class="table">
-          <tr>
-            <th>Kobe Bryant</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th align="left">Points</th>
-            <td id="tb-pts">N/A</td>
-            <td></td>
-            <th align="left">FG%</th>
-            <td id="tb-fg">N/A</td>
-          </tr>
-          <tr>
-            <th align="left">Rebounds</th>
-            <td id="tb-rebs">N/A</td>
-            <td></td>
-            <th align="left">FT%</th>
-            <td id="tb-ft">N/A</td>
-          </tr>
-          <tr>
-            <th align="left">Assists</th>
-            <td id="tb-asts">N/A</td>
-            <td></td>
-            <th align="left">3P%</th>
-            <td id="tb-threept">N/A</td>
-          </tr>
-          <tr>
-            <th align="left">Steals</th>
-            <td id="tb-stls">N/A</td>
-          </tr>
-          <tr>
-            <th align="left">Blocks</th>
-            <td id="tb-blks">N/A</td>
-          </tr>
-          <tr>
-            <th align="left">Turnovers</th>
-            <td id="tb-tovs">N/A</td>
-          </tr>
-        </table>
-      </div>
-      <div class="game-info-text">
-        <p>Click on the game events in the <strong>scatterplot</strong> above to get a detailed look into Kobe's performance from that game</p>
-      </div>
 
-    </div>
 
     <div class="chart-3">
       <svg class="svg2" width="1000" height="600"></svg>
+
       <script>
 
       let svg2 = d3.select(".svg2");

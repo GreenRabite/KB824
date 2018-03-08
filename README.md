@@ -37,8 +37,11 @@ superagent
   ```
 
 ### Scatterplot of the Data
-![Data Set]()
 
 In all, over 1400 different nodes (games) were harvested and cleaned. The data was formatted into a *comma separated value* (**CSV**), a format parsable to **D3**.  A snippet of each node can be seen below:
 `Rk,G,Date,Age,Tm,,Opp,,GS,MP,FG,FGA,FG%,3P,3PA,3P%,FT,FTA,FT%,ORB,DRB,TRB,AST,STL,BLK,TOV,PF,PTS,GmSc`
 `1,1,1996-11-03,18-072,LAL,,MIN,W (+6),0,6:00,0,1,.000,0,0,,0,0,,0,1,1,0,0,1,1,1,0,-1.1`
+
+Some feature of this chart is the ability to dynamically change the value of the scatterplot node from an event listen handler install on a button. This causes the data to display the new stat triggering a transition for each of the nodes as well as transforming the axis as necessary. 
+
+![Data Set](https://raw.githubusercontent.com/GreenRabite/KB824/master/app/assets/gifs/main-chart.gif)
