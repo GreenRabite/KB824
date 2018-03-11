@@ -161,7 +161,7 @@
 
   d3.csv("./data/kobe-reg-games-log.csv", type, function(error, data) {
     if (error) throw error;
-    console.log(data);
+    // console.log(data);
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([0, d3.max(data, function(d) { return d.PTS; })]);
     x2.domain(x.domain());
