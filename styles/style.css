@@ -28,10 +28,35 @@
 
 }
 
+.chart-3{
+  display: flex;
+}
+
 .headshot{
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  object-fit: cover;
+  -webkit-filter: drop-shadow(5px 5px 5px #222 );
+  filter: drop-shadow(2.5px 5px 5px #222);
+  margin-top: 18px;
+  margin-left: 30px;
+}
+.headshot3{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  -webkit-filter: drop-shadow(5px 5px 5px #222 );
+  filter: drop-shadow(2.5px 5px 5px #222);
+  margin-top: 18px;
+  margin-left: 30px;
+}
+
+.headshot2{
+  width: 175px;
+  height: 175px;
+  /*border-radius: 50%;*/
   object-fit: cover;
   -webkit-filter: drop-shadow(5px 5px 5px #222 );
   filter: drop-shadow(2.5px 5px 5px #222);
@@ -104,6 +129,10 @@ div.tooltip {
 }*/
 
 .gameEvent:hover{
+  cursor: pointer;
+}
+
+.map-circles:hover{
   cursor: pointer;
 }
 

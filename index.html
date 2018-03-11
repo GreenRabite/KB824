@@ -87,6 +87,7 @@
           <button type="button" class="tovs large blue button">Turnovers</button>
           <button type="button" class="gmsc large blue button">Efficiency</button>
         </div>
+
       </div>
 
     </div>
@@ -166,16 +167,6 @@
     x2.domain(x.domain());
     y2.domain(y.domain());
 
-
-    // let fixedData ={};
-    // let arr = [];
-    // data.forEach((d)=>{
-    //   fixedData["date"] = d.date;
-    //   fixedData["PTS"] = d.PTS;
-    //   arr.push(fixedData);
-    //   fixedData = {};
-    // })
-
     let totalPoints ={};
     let homeAwaySplits = new Proxy({}, {
       get: function(object, property) {
@@ -224,7 +215,7 @@
         return a[1] - b[1];
     });
 
-
+    debugger;
 
       //
     // focus.append("path")
@@ -694,46 +685,48 @@
 
   });
 
+  let teamLogo = {
+    "ATL" : "app/assets/images/9168_atlanta_hawks-primary-2016.png",
+    "BRK" : "app/assets/images/137_brooklyn-nets-primary-2013.png",
+    "CHA" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
+    "CHO" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
+    "DET" : "app/assets/images/2164_detroit_pistons-primary-2018.png",
+    "SAS" : "app/assets/images/2547_san_antonio_spurs-primary-2018.png",
+    "NOH" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
+    "NOP" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
+    "DAL" : "app/assets/images/3463_dallas_mavericks-primary-2018.png",
+    "SAC" : "app/assets/images/4043_sacramento_kings-primary-2017.png",
+    "PHO" : "app/assets/images/4370_phoenix_suns-primary-2014.png",
+    "TOR": "app/assets/images/4578_toronto_raptors-primary-2016.png",
+    "IND": "app/assets/images/4812_indiana_pacers-primary-2018.png",
+    "LAC" : "app/assets/images/5462_los_angeles_clippers-primary-2016.png",
+    "WAS" : "app/assets/images/5671_washington_wizards-primary-2016.png",
+    "CLE" : "app/assets/images/6921_cleveland_cavaliers-primary-2018.png",
+    "PHI" : "app/assets/images/7034_philadelphia_76ers-primary-2016.png",
+    "MIL": "app/assets/images/8275_milwaukee_bucks-primary-2016.png",
+    "MIN" : "app/assets/images/9669_minnesota_timberwolves-primary-2018.png",
+    "POR" : "app/assets/images/9725_portland_trail_blazers-primary-2018.png",
+    "BOS" : "app/assets/images/boston.png",
+    "CHI" : "app/assets/images/bulls.png",
+    "DEN" : "app/assets/images/denver.gif",
+    "MEM" : "app/assets/images/grizz.gif",
+    "MIA" : "app/assets/images/heat.gif",
+    "NYK" : "app/assets/images/knicks.gif",
+    "ORL" : "app/assets/images/magics.gif",
+    "OKC" : "app/assets/images/okc.png",
+    "HOU" : "app/assets/images/rockets.gif",
+    "GSW" : "app/assets/images/warriors.png",
+    "UTA" :  "app/assets/images/6749_utah_jazz-primary-2017.png",
+    "NOH" : "app/assets/images/NOH.gif",
+    "SEA" : "app/assets/images/sonics.gif",
+    "VAN" : "app/assets/images/van-grizz.gif",
+    "NJN" : "app/assets/images/NJN.gif",
+    "NOK" : "app/assets/images/NOH.gif",
+    "CHH" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png"
+  }
+
   function updateTable(d) {
-    let teamLogo = {
-      "ATL" : "app/assets/images/9168_atlanta_hawks-primary-2016.png",
-      "BRK" : "app/assets/images/137_brooklyn-nets-primary-2013.png",
-      "CHA" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
-      "CHO" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
-      "DET" : "app/assets/images/2164_detroit_pistons-primary-2018.png",
-      "SAS" : "app/assets/images/2547_san_antonio_spurs-primary-2018.png",
-      "NOH" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
-      "NOP" : "app/assets/images/2681_new_orleans_pelicans-primary-2014.png",
-      "DAL" : "app/assets/images/3463_dallas_mavericks-primary-2018.png",
-      "SAC" : "app/assets/images/4043_sacramento_kings-primary-2017.png",
-      "PHO" : "app/assets/images/4370_phoenix_suns-primary-2014.png",
-      "TOR": "app/assets/images/4578_toronto_raptors-primary-2016.png",
-      "IND": "app/assets/images/4812_indiana_pacers-primary-2018.png",
-      "LAC" : "app/assets/images/5462_los_angeles_clippers-primary-2016.png",
-      "WAS" : "app/assets/images/5671_washington_wizards-primary-2016.png",
-      "CLE" : "app/assets/images/6921_cleveland_cavaliers-primary-2018.png",
-      "PHI" : "app/assets/images/7034_philadelphia_76ers-primary-2016.png",
-      "MIL": "app/assets/images/8275_milwaukee_bucks-primary-2016.png",
-      "MIN" : "app/assets/images/9669_minnesota_timberwolves-primary-2018.png",
-      "POR" : "app/assets/images/9725_portland_trail_blazers-primary-2018.png",
-      "BOS" : "app/assets/images/boston.png",
-      "CHI" : "app/assets/images/bulls.png",
-      "DEN" : "app/assets/images/denver.gif",
-      "MEM" : "app/assets/images/grizz.gif",
-      "MIA" : "app/assets/images/heat.gif",
-      "NYK" : "app/assets/images/knicks.gif",
-      "ORL" : "app/assets/images/magics.gif",
-      "OKC" : "app/assets/images/okc.png",
-      "HOU" : "app/assets/images/rockets.gif",
-      "GSW" : "app/assets/images/warriors.png",
-      "UTA" :  "app/assets/images/6749_utah_jazz-primary-2017.png",
-      "NOH" : "app/assets/images/NOH.gif",
-      "SEA" : "app/assets/images/sonics.gif",
-      "VAN" : "app/assets/images/van-grizz.gif",
-      "NJN" : "app/assets/images/NJN.gif",
-      "NOK" : "app/assets/images/NOH.gif",
-      "CHH" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png"
-    }
+
 
     let pts = document.getElementById("tb-pts");
     let trb = document.getElementById("tb-rebs");
@@ -755,6 +748,23 @@
     threept.innerText = `${((d["3P"] / d["3PA"]) * 100).toFixed(1) + "%"}`;
     ft.innerText = `${((d.FT / d.FTA) * 100).toFixed(1) + "%"}`;
     oppImg.src = teamLogo[d.Opp]
+  }
+
+  function updateTeamTable(d) {
+    debugger;
+    let teamPts = document.getElementById("teams-pts");
+    let teamGames = document.getElementById("teams-games");
+    let teamCity = document.getElementById("teams-city");
+    let teamName = document.getElementById("teams-name");
+    let opp2Img = document.getElementById("opp2Img");
+    teamPts.innerText = `${d.pts} PPG`;
+    teamGames.innerText = `${d.games} G`;
+    teamCity.innerText = `${d.place}`;
+    teamName.innerText = `${d.teamname}`;
+    // fg.innerText = `${((d.FG / d.FGA) * 100).toFixed(1) + "%"}`;
+    // threept.innerText = `${((d["3P"] / d["3PA"]) * 100).toFixed(1) + "%"}`;
+    // ft.innerText = `${((d.FT / d.FTA) * 100).toFixed(1) + "%"}`;
+    opp2Img.src = `${teamLogo[d.abb]}`;
   }
 
   function brushed() {
@@ -791,14 +801,69 @@
   </script>
 <div class="bottom-container-main">
   <div class="bottom-blurb">
-    <h1>Heat Map</h1>
-
+    <h1>Conquest Map</h1>
+    <p>Kobe was like a modern day Alexander the Great, conquering each city like the famed ancient Greek general. Below is the very same conquest path he took. Join me as we travel through his conquering cities from lowest scoring average to his highest. <br/><br/> <strong>N.B.</strong> Please note that this is by <strong>team abbreviations</strong> so the <em>Seattle Supersonics</em> are a different squad from the <em>OKC Thunder</em>.</p>
   </div>
   <div class="bottom-container">
 
     <div class="chart-3">
       <svg class="svg2" width="1000" height="600"></svg>
-
+      <div class="chart-two">
+        <h3>City Info</h3>
+        <div class="image-container">
+          <img id="opp2Img" class="headshot3" src="http://cliparts.co/cliparts/6ip/5zK/6ip5zKopT.gif"/>
+          <img class="headshot2" src="./app/assets/images/other_images/kobe_dunk.png" alt="">
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <tr>
+              <th>Kobe Bryant</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th align="left">City</th>
+              <td id="teams-city">N/A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <th align="left">Team</th>
+              <td id="teams-name">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Points</th>
+              <td id="teams-pts">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Games</th>
+              <td id="teams-games">N/A</td>
+            </tr>
+            <!-- <tr>
+              <th align="left">Rebounds</th>
+              <td id="tb-rebs">N/A</td>
+              <td></td>
+              <th align="left">FT%</th>
+              <td id="tb-ft">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Assists</th>
+              <td id="tb-asts">N/A</td>
+              <td></td>
+              <th align="left">3P%</th>
+              <td id="tb-threept">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Steals</th>
+              <td id="tb-stls">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Blocks</th>
+              <td id="tb-blks">N/A</td>
+            </tr>
+            <tr>
+              <th align="left">Turnovers</th>
+              <td id="tb-tovs">N/A</td>
+            </tr> -->
+          </table>
       <script>
 
       let svg2 = d3.select(".svg2");
@@ -857,16 +922,20 @@
             .on("mouseover", function(d) {
               tooltip.transition()
               .duration(200)
+              .style("cursor", "pointer")
               .style("opacity", .9);
               tooltip.html(`${d.place} ${d.teamname}`)
               .style("left", (d3.event.pageX + 5) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
             })
             .on("mouseout", function(d) {
-              debugger;
               tooltip.transition()
               .duration(500)
               .style("opacity", 0);
+            })
+            .on("click", (d)=>{
+              debugger;
+              updateTeamTable(d);
             });
 
 
@@ -901,7 +970,6 @@
             // Standard enter / update
 
             for (let i = 0; i < links.length; i++) {
-              debugger;
               svg2.selectAll(`line${i}`)
               .data(links)
               .enter()

@@ -1,38 +1,38 @@
-no,place,teamname,lat,lon,abb,img_url
-1,DC,Bullets,38.93,-76.518999,WSB,app/assets/images/4578_toronto_raptors-primary-2016
-2,Vancouver,Grizzlies,49.278,-123.109,VAN,app/assets/images/4578_toronto_raptors-primary-2016
-3,New Orleans,Pelicans,30.1,-91.2,NOP,app/assets/images/4578_toronto_raptors-primary-2016
-4,Charlotte,Hornets,36.09931,-80.817799,CHA,app/assets/images/4578_toronto_raptors-primary-2016
-5,Brooklyn,Nets,41.23,-74.71,BRK,app/assets/images/4578_toronto_raptors-primary-2016
-6,Charlotte,Hornets,36.09931,-80.817799,CHA,app/assets/images/4578_toronto_raptors-primary-2016
-7,Detroit,Pistons,42.408871,-85.002647,DET,app/assets/images/4578_toronto_raptors-primary-2016
-8,Atlanta,Hawks,33.46,-84.25,ATL,app/assets/images/4578_toronto_raptors-primary-2016
-9,New Jersey,Nets,40.44,-74.1,NJN,app/assets/images/4578_toronto_raptors-primary-2016
-10,Cleveland,Cavaliers,40.640475,-82.582569,CLE,app/assets/images/4578_toronto_raptors-primary-2016
-11,Oklahoma City,Thunder,35.29,-97.49,OKC,app/assets/images/4578_toronto_raptors-primary-2016
-12,Philadelphia,76ers,40.252335,-76.163789,PHI,app/assets/images/4578_toronto_raptors-primary-2016
-13,San Antonio,Spurs,29.4241219,-98.4936282,SAS,app/assets/images/4578_toronto_raptors-primary-2016
-14,Chicago,Bulls,41.51,-88.79,CHI,app/assets/images/4578_toronto_raptors-primary-2016
-15,Miami,Heat,26.4889689,-81.2264393,MIA,app/assets/images/4578_toronto_raptors-primary-2016
-16,Dallas,Mavericks,32.7801399,-96.8004511,DAL,app/assets/images/4578_toronto_raptors-primary-2016
-17,Milwaukee,Bucks,43.241809,-88.906837,MIL,app/assets/images/4578_toronto_raptors-primary-2016
-18,Minnesota,Timberwolves,43.979031,-94.264931,MIN,app/assets/images/4578_toronto_raptors-primary-2016
-19,Utah,Jazz,40.47,-111.58,UTH,app/assets/images/4578_toronto_raptors-primary-2016
-20,Seattle,Supersonics,47.622,-122.354,SEA,app/assets/images/4578_toronto_raptors-primary-2016
-21,Indiana,Pacers,39.766911,-86.149963,IND,app/assets/images/4578_toronto_raptors-primary-2016
-22,Denver,Nuggets,39.737567,-104.9847179,DEN,app/assets/images/4578_toronto_raptors-primary-2016
-23,Los Angeles,Clippers,34.55349,-117.245323,LAC,app/assets/images/4578_toronto_raptors-primary-2016
-24,Orlando,Magic,28.33,-81.2,ORL,app/assets/images/4578_toronto_raptors-primary-2016
-25,Boston,Celtics,42.3584308,-71.0597732,BOS,app/assets/images/4578_toronto_raptors-primary-2016
-26,DC,Wizards,38.93,-76.518999,WSB,app/assets/images/4578_toronto_raptors-primary-2016
-27,Phoenix,Suns,33.142,-112.0435,PHX,app/assets/images/4578_toronto_raptors-primary-2016
-28,Portland,TrailBlazers,44.52186,-122.882594,POR,app/assets/images/4578_toronto_raptors-primary-2016
-29,Sacramento,Kings,39.915291,-122.594651,SAC,app/assets/images/4578_toronto_raptors-primary-2016
-30,New York,Knicks,40.71455,-74.007124,NYK,app/assets/images/4578_toronto_raptors-primary-2016
-31,New Orleans,Hornets,29.566,-90.4,NOH,app/assets/images/4578_toronto_raptors-primary-2016
-18,Houston,Rockets,30.46,-95.23,HOU,app/assets/images/4578_toronto_raptors-primary-2016
-1,Toronto,Raptors,44.391,-80.53,TOR,app/assets/images/4578_toronto_raptors-primary-2016
-16,Golden State,Warriors,37.47,-121.13,GSW,app/assets/images/4578_toronto_raptors-primary-2016
-17,Memphis,Grizzlies,35.749681,-89.04892,MEM,app/assets/images/4578_toronto_raptors-primary-2016
-12,Charlotte,Hornets,36.09931,-80.817799,CHA,app/assets/images/4578_toronto_raptors-primary-2016
-12,New Orleans/OKC,Hornets,37,-81,NOK,app/assets/images/4578_toronto_raptors-primary-2016
+no,place,teamname,lat,lon,abb,pts,games
+1,DC,Bullets,38.93,-76.518999,WSB,13,1
+2,Vancouver,Grizzlies,49.278,-123.109,VAN,16.44,18
+3,New Orleans,Pelicans,30.1,-91.2,NOP,18.17,6
+4,Charlotte,Hornets,36.09931,-80.817799,CHO,18.27,11
+5,Brooklyn,Nets,41.23,-74.71,BRK,21.33,3
+6,Charlotte,Hornets,36.09931,-80.817799,CHA,21.33,17
+7,Detroit,Pistons,42.408871,-85.002647,DET,22.18,33
+8,Atlanta,Hawks,33.46,-84.25,ATL,22.28,29
+9,New Jersey,Nets,40.44,-74.1,NJN,22.5,24
+10,Cleveland,Cavaliers,40.640475,-82.582569,CLE,23.32,34
+11,Oklahoma City,Thunder,35.29,-97.49,OKC,23.5,22
+12,Philadelphia,76ers,40.252335,-76.163789,PHI,23.5,32
+13,San Antonio,Spurs,29.4241219,-98.4936282,SAS,23.56,61
+14,Chicago,Bulls,41.51,-88.79,CHI,23.74,31
+15,Miami,Heat,26.4889689,-81.2264393,MIA,23.76,33
+16,Dallas,Mavericks,32.7801399,-96.8004511,DAL,24.02,60
+17,Milwaukee,Bucks,43.241809,-88.906837,MIL,24.19,32
+18,Minnesota,Timberwolves,43.979031,-94.264931,MIN,24.23,64
+19,Utah,Jazz,40.47,-111.58,UTH,24.51,65
+20,Seattle,Supersonics,47.622,-122.354,SEA,24.58,43
+21,Indiana,Pacers,39.766911,-86.149963,IND,24.71,34
+22,Denver,Nuggets,39.737567,-104.9847179,DEN,24.83,66
+23,Los Angeles,Clippers,34.55349,-117.245323,LAC,24.93,69
+24,Orlando,Magic,28.33,-81.2,ORL,24.97,29
+25,Boston,Celtics,42.3584308,-71.0597732,BOS,25.07,31
+26,DC,Wizards,38.93,-76.518999,WSB,25.9,31
+27,Phoenix,Suns,33.142,-112.0435,PHX,26,64
+28,Portland,TrailBlazers,44.52186,-122.882594,POR,26.08,66
+29,Sacramento,Kings,39.915291,-122.594651,SAC,26.52,64
+30,New York,Knicks,40.71455,-74.007124,NYK,26.53,34
+31,New Orleans,Hornets,29.566,-90.4,NOH,26.61,28
+18,Houston,Rockets,30.46,-95.23,HOU,26.64,61
+1,Toronto,Raptors,44.391,-80.53,TOR,27,33
+16,Golden State,Warriors,37.47,-121.13,GSW,27.04,67
+17,Memphis,Grizzlies,35.749681,-89.04892,MEM,27.35,49
+12,Charlotte,Hornets,36.09931,-80.817799,CHA,28.24,3
+12,New Orleans/OKC,Hornets,37,-81,NOK,33.86,7
