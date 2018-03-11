@@ -215,7 +215,6 @@
         return a[1] - b[1];
     });
 
-    debugger;
 
       //
     // focus.append("path")
@@ -588,7 +587,6 @@
             });
     d3.select(".gmsc") // Game Score
           .on("click", function() {
-              debugger;
               y.domain([0, d3.max(data, function(d) {
                 return d.GmSc; })]);
 
@@ -751,7 +749,6 @@
   }
 
   function updateTeamTable(d) {
-    debugger;
     let teamPts = document.getElementById("teams-pts");
     let teamGames = document.getElementById("teams-games");
     let teamCity = document.getElementById("teams-city");
@@ -934,7 +931,6 @@
               .style("opacity", 0);
             })
             .on("click", (d)=>{
-              debugger;
               updateTeamTable(d);
             });
 
