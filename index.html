@@ -167,16 +167,66 @@
     y2.domain(y.domain());
 
 
-    let fixedData ={};
+    // let fixedData ={};
+    // let arr = [];
+    // data.forEach((d)=>{
+    //   fixedData["date"] = d.date;
+    //   fixedData["PTS"] = d.PTS;
+    //   arr.push(fixedData);
+    //   fixedData = {};
+    // })
+
+    let totalPoints ={};
+    let homeAwaySplits = new Proxy({}, {
+      get: function(object, property) {
+        return object.hasOwnProperty(property) ? object[property] : 0;
+      }
+    });
+    let teamSplits = new Proxy({}, {
+      get: function(object, property) {
+        return object.hasOwnProperty(property) ? object[property] : 0;
+      }
+    });
+    let teamGames = new Proxy({}, {
+      get: function(object, property) {
+        return object.hasOwnProperty(property) ? object[property] : 0;
+      }
+    });
+    let teamAvg = {};
     let arr = [];
     data.forEach((d)=>{
-      fixedData["date"] = d.date;
-      fixedData["PTS"] = d.PTS;
-      arr.push(fixedData);
-      fixedData = {};
-    })
+      if (d.vs === "@") {
+        homeAwaySplits["road"] += d.PTS;
+        homeAwaySplits["roadGames"] += 1;
+      }else {
+        homeAwaySplits["home"] += d.PTS;
+        homeAwaySplits["homeGames"] += 1;
+      }
+      teamSplits[`${d.Opp}`] += d.PTS;
+      teamGames[`${d.Opp}`] += 1;
 
-    //
+    });
+    //Kobe Home/Road Avgerages
+    homeAwaySplits["homeAvg"] = homeAwaySplits["home"] / homeAwaySplits["homeGames"];
+    homeAwaySplits["roadAvg"] = homeAwaySplits["road"] / homeAwaySplits["roadGames"];
+    // Team Splits
+    Object.keys(teamSplits).forEach((d)=> {
+      teamAvg[`${d}`] = teamSplits[`${d}`] / teamGames[`${d}`]
+    });
+
+    //Kobe points against every arena
+    let sortedArenaPoints = [];
+    for (let team in teamAvg) {
+        sortedArenaPoints.push([team, teamAvg[team]]);
+    }
+
+    sortedArenaPoints.sort(function(a, b) {
+        return a[1] - b[1];
+    });
+
+
+
+      //
     // focus.append("path")
     //     .datum(arr)
     //     .attr("class", "area")
@@ -787,7 +837,7 @@
         .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) {
           return a !== b; })));
 
-          d3.csv("data/NBA-teams.csv", (data) => {
+          d3.csv("data/NBA-teams2.csv", (data) => {
 
             svg2.selectAll(".map-circles")
             .data(data)
@@ -813,6 +863,7 @@
               .style("top", (d3.event.pageY - 28) + "px");
             })
             .on("mouseout", function(d) {
+              debugger;
               tooltip.transition()
               .duration(500)
               .style("opacity", 0);
@@ -860,7 +911,7 @@
               .attr("x2", projection(links[i].coordinates[0])[0])
               .attr("y2", projection(links[i].coordinates[0])[1])
               .transition()
-              .duration(3000)
+              .duration(2000)
               .delay(2000*i)
               .attr("x2", projection(links[i].coordinates[1])[0])
               .attr("y2", projection(links[i].coordinates[1])[1])
