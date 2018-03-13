@@ -475,3 +475,68 @@ h3{
 .bottom-container-main{
   background-color: rgba(255,255,255,.9);
 }
+
+.conquest-blurb p {
+  width: 90%;
+}
+
+.footer{
+  margin-top: 23%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  height: 300px;
+  border-radius: 10px;
+  /*border: 1px solid black;*/
+  background: #552583;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FDB927, #552583);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FDB927, #552583);
+  margin-right: -125px;
+  transition: 0.5s ease;
+}
+
+.footer:hover{
+  margin-right: -10px;
+}
+
+.social{
+  position: relative;
+  margin-left: -30px;
+  /*margin-top: 75px;*/
+  top: 38%;
+  width: 50px;
+}
+
+
+.social img{
+  width: 50px;
+  height: 50px;
+}
+
+.footer-container:hover {
+  right: -3px;
+}
+
+.link-stack a:not(:first-child){
+  margin-top: 20px;
+}
+
+
+.icon{
+
+  font-size: 50px;
+  color: #552583;
+  transition: 0.35s;
+}
+
+.icon:hover{
+  color: #FDB927;
+}
+
+.link-stack{
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+}

@@ -3,15 +3,17 @@
 <link rel="stylesheet" href="./styles/style-1.scss">
 <link rel="stylesheet" href="./styles/style.css">
 <link rel="stylesheet" href="app/assets/javascripts/animate.css">
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-<link rel="shortcut icon" type="image/png" href="app/assets/images/other_images/favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="app/assets/images/other_images/favicon-32x32.png"/>
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
 <link rel="stylesheet" href="app/assets/javascripts/javascript.js">
 <body>
   <h1>KB824: Journey of a Legend</h1>
@@ -23,7 +25,7 @@
       <p>Below is a scatterplot of every single game that Kobe has ever played in the NBA. Feel free to <strong>hover</strong> over the scatterplots for a blurb on how successful Kobe was that night. <strong>Click</strong> on the nodes to see detailed stats from that night. Finally, press the <strong>buttons</strong> on the right to shift the nodes around.</p>
     </div>
     <div class="top-display">
-      <div width=1000><svg width="1150" height="600"></svg> </div>
+      <div width=1000><svg width="1000" height="600"></svg> </div>
 
       <div class="top-container">
         <div class="chart-two">
@@ -799,7 +801,9 @@
 <div class="bottom-container-main">
   <div class="bottom-blurb">
     <h1>Conquest Map</h1>
-    <p>Kobe was like a modern day Alexander the Great, conquering each city like the famed ancient Greek general. Below is the very same conquest path he took. Join me as we travel through his conquering cities from lowest scoring average to his highest. <br/><br/> <strong>N.B.</strong> Please note that this is by <strong>team abbreviations</strong> so the <em>Seattle Supersonics</em> are a different squad from the <em>OKC Thunder</em>.</p>
+    <div class="conquest-blurb">
+      <p style=>Kobe was like a modern day Alexander the Great, conquering each city like the famed ancient Greek general. Below is the very same conquest path he took. Join me as we travel through his conquering cities from lowest scoring average to his highest. <br/><br/> <strong>N.B.</strong> Please note that this is by <strong>team abbreviations</strong> so the <em>Seattle Supersonics</em> are a different squad from the <em>OKC Thunder</em>.</p>
+    </div>
   </div>
   <div class="bottom-container">
 
@@ -981,7 +985,7 @@
               .attr("x2", projection(links[i].coordinates[1])[0])
               .attr("y2", projection(links[i].coordinates[1])[1])
               .style("stroke","#552583")
-              .style("stroke-width","1");
+              .style("stroke-width","2");
 
             }
 
@@ -1029,3 +1033,14 @@
 </div>
 
 </body>
+<footer>
+
+  <div class="footer">
+    <div class="social"><img src="app/assets/images/other_images/info.png"/></div>
+    <div class="link-stack">
+      <a href="https://github.com/GreenRabite" target="_blank"><i class="devicon-github-plain-wordmark icon"></i></a>
+      <a href="http://andy-luo.com/" target="_blank"><i class="devicon-chrome-plain icon"></i></a>
+      <a href="https://www.linkedin.com/in/andywluo/" target="_blank"><i class="fab fa-linkedin icon"></i></a>
+    </div>
+  </div>
+</footer>
