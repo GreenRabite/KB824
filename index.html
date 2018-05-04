@@ -804,6 +804,10 @@
     <div class="conquest-blurb">
       <p style=>Kobe was a modern day <strong>Alexander the Great</strong>, conquering opposing cities like the famed ancient Greek general. Below is the route he took through his twenty year campaign. Join me as we take a trip through memory lane, drawing a path to the eventually city where he has his highest scoring average. Follow the same <strong>path</strong> he took ranging from as far east as <em>New York</em> to the friendly coasts of <em>Los Angeles</em>. You can <strong>click</strong> on the <strong>cities</strong> for more information. <br/><br/> <strong>N.B.</strong> Please note that this is by <strong>team abbreviations</strong> so the <em>Seattle Supersonics</em> are a different squad from the <em>OKC Thunder</em>.</p>
     </div>
+    <div id="conquest-btn-container">
+      <button type="button" class="large blue button">Begin the Conquest</button>
+    </div>
+
   </div>
   <div class="bottom-container">
 
@@ -956,38 +960,44 @@
             //     });
             // }
 
-            let links = [];
-            for(let i=0; i < data.length-1; i++){
+            function startMap(){
+              let links = [];
+              for(let i=0; i < data.length-1; i++){
                 // (note: loop until length - 1 since we're getting the next
                 //  item with i+1)
                 links.push({
-                    coordinates: [
-                        [ data[i].lon, data[i].lat ],
-                        [ data[i+1].lon, data[i+1].lat ]
-                    ]
+                  coordinates: [
+                    [ data[i].lon, data[i].lat ],
+                    [ data[i+1].lon, data[i+1].lat ]
+                  ]
                 });
+              }
+
+              // Standard enter / update
+
+              for (let i = 0; i < links.length; i++) {
+                svg2.selectAll(`line${i}`)
+                .data(links)
+                .enter()
+                .append(`line`)
+                .attr("x1", projection(links[i].coordinates[0])[0])
+                .attr("y1", projection(links[i].coordinates[0])[1])
+                .attr("x2", projection(links[i].coordinates[0])[0])
+                .attr("y2", projection(links[i].coordinates[0])[1])
+                .transition()
+                .duration(1000)
+                .delay(1000*i)
+                .attr("x2", projection(links[i].coordinates[1])[0])
+                .attr("y2", projection(links[i].coordinates[1])[1])
+                .style("stroke","#552583")
+                .style("stroke-width","2");
+
+              }
             }
 
-            // Standard enter / update
-
-            for (let i = 0; i < links.length; i++) {
-              svg2.selectAll(`line${i}`)
-              .data(links)
-              .enter()
-              .append(`line`)
-              .attr("x1", projection(links[i].coordinates[0])[0])
-              .attr("y1", projection(links[i].coordinates[0])[1])
-              .attr("x2", projection(links[i].coordinates[0])[0])
-              .attr("y2", projection(links[i].coordinates[0])[1])
-              .transition()
-              .duration(2000)
-              .delay(2000*i)
-              .attr("x2", projection(links[i].coordinates[1])[0])
-              .attr("y2", projection(links[i].coordinates[1])[1])
-              .style("stroke","#552583")
-              .style("stroke-width","2");
-
-            }
+            //Start the Map
+            const mapBtn = document.querySelector("#conquest-btn-container button");
+            mapBtn.addEventListener('click',startMap);
 
         });
 

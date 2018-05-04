@@ -540,3 +540,9 @@ h3{
   flex-direction: column;
   margin-left: 50px;
 }
+
+#conquest-btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
