@@ -1,3 +1,8 @@
+
+body{
+  width: 100vw;
+}
+
 #splash-page{
   position: fixed;
   top: 0;
