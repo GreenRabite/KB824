@@ -4,3 +4,5 @@ TODO:
 * Simplify the functions plotting the data points
 * Responsive SVGs for the canvas to work on all screen sizes
 * Clean up the d3 functions
+* Clean up the text on the main page
+* Rewrite the summaries
