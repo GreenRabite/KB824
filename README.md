@@ -7,6 +7,8 @@ Kobe Bryant was one of basketball most endearing superstars of the modern era am
 
 KB824 is a web application that will take a look into his illustrious 20 year career with the Los Angeles Lakers using vanilla JavaScript and a JavaScript library known as **d3** to bring the data to life.
 
+**UPDATE**: On January 26, 2020, a world lost an icon. Kobe was doing what he does best, being a father, and was on his way taking his beautiful and talented daugther Gianna to a youth game. On the way there, reduced visibility caused the heliocopter to crash killing all 9 aboard. While my heart is still heavy, I know his memories and teachings will still endure the test of time. Thank you Kobe for everything you did. Much love. Mamba out 🎤 
+
 Technologies Used
 
 ### Webscraping The Data
