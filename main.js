@@ -710,7 +710,7 @@ d3.select(".tovs") //Turnovers
 });
 
   let teamLogo = {
-            "ATL" : "app/assets/images/9168_atlanta_hawks-primary-2016.png",
+        "ATL" : "app/assets/images/9168_atlanta_hawks-primary-2016.png",
         "BRK" : "app/assets/images/137_brooklyn-nets-primary-2013.png",
         "CHA" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
         "CHO" : "app/assets/images/1926_charlotte__hornets_-primary-2015.png",
@@ -752,7 +752,7 @@ d3.select(".tovs") //Turnovers
   function updateTable(d) {
 
 
-            let pts = document.getElementById("tb-pts");
+        let pts = document.getElementById("tb-pts");
         let trb = document.getElementById("tb-rebs");
         let asts = document.getElementById("tb-asts");
         let stls = document.getElementById("tb-stls");
