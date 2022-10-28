@@ -351,425 +351,77 @@ document.addEventListener("DOMContentLoaded", () => {
     //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     //     .call(zoom);
 
-    // On click, update with new data
-    d3.select(".rebs") //TRB
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.TRB;
-          }),
-        ]);
-        // yScale.domain([0, d3.max(dataset, function(d) {
-        //     return d[1]; })]);
+    /**
+     * Install event listeners on each of the buttons
+     * First argument: HTML class name of the button
+     * second argument: key identifier used to find the key value pair
+     * third argument: radius - affects how big the circle is
+     */
+    [
+      [".rebs", "TRB", 1.6],
+      [".pts", "PTS", 6],
+      [".asts", "AST", 1.3],
+      [".blks", "BLK", 0.4],
+      [".stls", "STL", 0.6],
+      [".gmsc", "GmSc", 5],
+      [".tovs", "TOV", 1],
+    ].forEach(([className, keyIdentifer, radius]) => {
+      // On click, update with new data
+      d3.select(className) //TRB
+        .on("click", function () {
+          y.domain([
+            0,
+            d3.max(data, function (d) {
+              return d[keyIdentifer];
+            }),
+          ]);
+          // yScale.domain([0, d3.max(dataset, function(d) {
+          //     return d[1]; })]);
 
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              // .style("fill", LAKER_PURPLE)
-              .attr("fill", LAKER_GOLD) // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.TRB); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("stroke", "black")
-              .attr("stroke-width", "0")
-              .attr("r", (d) => {
-                return d.TRB / 1.6;
-              }); // Change radius
-          });
+          // Update circles
+          svg
+            .selectAll("circle")
+            .data(data) // Update with new data
+            .transition() // Transition from old to new
+            .duration(1000) // Length of animation
+            .on("start", function () {
+              // Start animation
+              d3.select(this) // 'this' means the current element
+                // .style("fill", LAKER_PURPLE)
+                .attr("fill", LAKER_GOLD) // Change color
+                .attr("r", 5); // Change size
+            })
+            .delay(function (d, i) {
+              return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
+            })
+            //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+            .attr("cx", function (d) {
+              return x(d.date); // Circle's X
+            })
+            .attr("cy", function (d) {
+              return y(d[keyIdentifer]); // Circle's Y
+            })
+            .on("end", function () {
+              // End animation
+              d3.select(this) // 'this' means the current element
+                .transition()
+                .duration(500)
+                .attr("fill", LAKER_PURPLE)
+                // .attr("fill", "black")  // Change color
+                .attr("stroke", "black")
+                .attr("stroke-width", "0")
+                .attr("r", (d) => {
+                  return d[keyIdentifer] / radius;
+                }); // Change radius
+            });
 
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
+          // Update X Axis
+          svg.select(".axis--x").transition().duration(1000).call(xAxis);
 
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
-
-    // On click, update with new data
-    d3.select(".pts") //Points
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.PTS;
-          }),
-        ]);
-
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              .attr("fill", LAKER_GOLD)
-              // .attr("fill", "red")  // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          // .ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.PTS); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("r", (d) => {
-                return d.PTS / 6;
-              }); // Change radius
-          });
-
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
-
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
-
-    // On click, update with new data
-    d3.select(".asts") //Assists
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.AST;
-          }),
-        ]);
-
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              .attr("fill", LAKER_GOLD)
-              // .attr("fill", "red")  // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.AST); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("r", (d) => {
-                return d.AST / 1.3;
-              }); // Change radius
-          });
-
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
-
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
-
-    // On click, update with new data
-    d3.select(".rebs") //TRB
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.TRB;
-          }),
-        ]);
-        // yScale.domain([0, d3.max(dataset, function(d) {
-        //     return d[1]; })]);
-
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              // .style("fill", LAKER_PURPLE)
-              .attr("fill", LAKER_GOLD) // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.TRB); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("stroke", "black")
-              .attr("stroke-width", "0")
-              .attr("r", (d) => {
-                return d.TRB / 1.6;
-              }); // Change radius
-          });
-
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
-
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
-
-    // On click, update with new data
-    d3.select(".blks") //Blocks
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.BLK;
-          }),
-        ]);
-
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              .attr("fill", LAKER_GOLD)
-              // .attr("fill", "red")  // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.BLK); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("r", (d) => {
-                return d.BLK / 0.4;
-              }); // Change radius
-          });
-
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
-
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
-
-    d3.select(".stls") //Steals
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.STL;
-          }),
-        ]);
-
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              .attr("fill", LAKER_GOLD)
-              // .attr("fill", "red")  // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.STL); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("r", (d) => {
-                return d.STL / 0.6;
-              }); // Change radius
-          });
-
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
-
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
-    d3.select(".gmsc") // Game Score
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.GmSc;
-          }),
-        ]);
-
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              .attr("fill", LAKER_GOLD)
-              // .attr("fill", "red")  // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.GmSc); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("r", (d) => {
-                return d.GmSc / 5;
-              }); // Change radius
-          });
-
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
-
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
-
-    d3.select(".tovs") //Turnovers
-      .on("click", function () {
-        y.domain([
-          0,
-          d3.max(data, function (d) {
-            return d.TOV;
-          }),
-        ]);
-
-        // Update circles
-        svg
-          .selectAll("circle")
-          .data(data) // Update with new data
-          .transition() // Transition from old to new
-          .duration(1000) // Length of animation
-          .on("start", function () {
-            // Start animation
-            d3.select(this) // 'this' means the current element
-              .attr("fill", LAKER_GOLD)
-              // .attr("fill", "red")  // Change color
-              .attr("r", 5); // Change size
-          })
-          .delay(function (d, i) {
-            return (i / data.length) * 500; // Dynamic delay (i.e. each item delays a little longer)
-          })
-          //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-          .attr("cx", function (d) {
-            return x(d.date); // Circle's X
-          })
-          .attr("cy", function (d) {
-            return y(d.TOV); // Circle's Y
-          })
-          .on("end", function () {
-            // End animation
-            d3.select(this) // 'this' means the current element
-              .transition()
-              .duration(700)
-              .attr("fill", LAKER_PURPLE)
-              // .attr("fill", "black")  // Change color
-              .attr("r", (d) => {
-                return d.TOV;
-              }); // Change radius
-          });
-
-        // Update X Axis
-        svg.select(".axis--x").transition().duration(1000).call(xAxis);
-
-        // Update Y Axis
-        svg.select(".axis--y").transition().duration(100).call(yAxis);
-      });
+          // Update Y Axis
+          svg.select(".axis--y").transition().duration(100).call(yAxis);
+        });
+    });
   });
 
   let teamLogo = {
@@ -823,12 +475,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let threept = document.getElementById("tb-threept");
     let ft = document.getElementById("tb-ft");
     let oppImg = document.getElementById("oppImg");
-    pts.innerText = `${d.PTS}`;
-    trb.innerText = `${d.TRB}`;
-    asts.innerText = `${d.AST}`;
-    stls.innerText = `${d.STL}`;
-    blks.innerText = `${d.BLK}`;
-    tovs.innerText = `${d.TOV}`;
+    pts.innerText = d.PTS;
+    trb.innerText = d.TRB;
+    asts.innerText = d.AST;
+    stls.innerText = d.STL;
+    blks.innerText = d.BLK;
+    tovs.innerText = d.TOV;
     fg.innerText = `${((d.FG / d.FGA) * 100).toFixed(1) + "%"}`;
     threept.innerText = `${((d["3P"] / d["3PA"]) * 100).toFixed(1) + "%"}`;
     ft.innerText = `${((d.FT / d.FTA) * 100).toFixed(1) + "%"}`;
