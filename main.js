@@ -351,21 +351,21 @@ document.addEventListener("DOMContentLoaded", () => {
     //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     //     .call(zoom);
 
-		/**
-		 * Install event listeners on each of the buttons
-		 * First argument: HTML class name of the button
-		 * second argument: key identifier used to find the key value pair
-		 * third argument: radius - affects how big the circle is
-		 */
-		[
-			['.rebs', 'TRB', 1.6],
-			['.pts', 'PTS', 6],
-			['.asts', 'AST', 1.3],
-			['.blks', 'BLK', 0.4],
-			['.stls', 'STL', 0.6],
-			['.gmsc', 'GmSc', 5],
-			['.tovs', 'TOV', 1],
-		].forEach(([className, keyIdentifer, radius]) => {
+    /**
+     * Install event listeners on each of the buttons
+     * First argument: HTML class name of the button
+     * second argument: key identifier used to find the key value pair
+     * third argument: radius - affects how big the circle is
+     */
+    [
+      [".rebs", "TRB", 1.6],
+      [".pts", "PTS", 6],
+      [".asts", "AST", 1.3],
+      [".blks", "BLK", 0.4],
+      [".stls", "STL", 0.6],
+      [".gmsc", "GmSc", 5],
+      [".tovs", "TOV", 1],
+    ].forEach(([className, keyIdentifer, radius]) => {
       // On click, update with new data
       d3.select(className) //TRB
         .on("click", function () {
@@ -421,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Update Y Axis
           svg.select(".axis--y").transition().duration(100).call(yAxis);
         });
-    })
+    });
   });
 
   let teamLogo = {
