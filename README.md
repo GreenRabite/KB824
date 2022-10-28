@@ -11,6 +11,14 @@ KB824 is a web application that will take a look into his illustrious 20 year ca
 
 Technologies Used
 
+### Quick Start
+
+You can use a small HTTP server to fire up this webpage. For this example, we can use **python3** to run a [simple local HTTP server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server). Run the following command once python3 is installed in the directory you wish to run the server on
+
+```bash
+python3 -m http.server
+```
+
 ### Webscraping The Data
 
 The dataset for the games played was obtained by webscraping from basketball reference sites. This was done using *SuperAgent*, a small progressive client-side HTTP request library and *Cheerio*, a library which parses markups and provides an API for traversing/manipulating the resulting DOM data structure. The API call is as follow and was very short itself. Meaningful cleaning of the data had to be performed after extraction of the data ad if I had to do it again, I would look to see if I could extract the data more cleanly.
@@ -102,7 +110,7 @@ d3.select(".pts") //Points
 
 ![Data Set](https://github.com/GreenRabite/KB824/blob/master/app/assets/gifs/kobe_conquest.gif?raw=true)
 
-Another highlight of this application is the interactive US Map. This map was created by passing in latitudinal and longitudinal coordinates  into a function that will spit out the proper pixel x pixel 2D coordinates. This is then spit into a variable that maps the path given by these coordinates to create a **US Map**.
+Another highlight of this application is the interactive US Map. This map was created by passing in latitudinal and longitudinal coordinates into a function that will spit out the proper pixel x pixel 2D coordinates. This is then spit into a variable that maps the path given by these coordinates to create a **US Map**.
 
 ```javascript
 let projection = d3.geoAlbersUsa();
