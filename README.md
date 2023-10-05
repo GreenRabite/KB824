@@ -110,7 +110,7 @@ d3.select(".pts") //Points
 
 ![Data Set](https://github.com/GreenRabite/KB824/blob/master/app/assets/gifs/kobe_conquest.gif?raw=true)
 
-Another highlight of this application is the interactive US Map. This map was created by passing in latitudinal and longitudinal coordinates into a function that will spit out the proper pixel x pixel 2D coordinates. This is then spit into a variable that maps the path given by these coordinates to create a **US Map**.
+Another highlight of this application is the interactive US Map. This map was created by passing in latitudinal and longitudinal coordinates into a function that will spit out the proper pixel x pixel 2D coordinates. This is then spit into a variable that maps the path given by these coordinates to create a **US Map**. Some more features are planned!
 
 ```javascript
 let projection = d3.geoAlbersUsa();
