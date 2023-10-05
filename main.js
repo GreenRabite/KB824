@@ -2,6 +2,8 @@ const LAKER_GOLD = "#FDB927";
 
 const LAKER_PURPLE = "#552583";
 
+const NBA_TEAMS_CSV_PATH = "data/NBA-teams2.csv";
+
 document.addEventListener("DOMContentLoaded", () => {
   let svg2 = d3.select(".svg2");
 
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       );
 
-    d3.csv("data/NBA-teams2.csv", (data) => {
+    d3.csv(NBA_TEAMS_CSV_PATH, (data) => {
       svg2
         .selectAll(".map-circles")
         .data(data)
@@ -81,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
       //Adding paths
-
       function startMap() {
         let links = [];
         for (let i = 0; i < data.length - 1; i++) {
@@ -96,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Standard enter / update
-
         for (let i = 0; i < links.length; i++) {
           svg2
             .selectAll(`line${i}`)
@@ -172,12 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .y1(function (d) {
       return y(d.PTS);
     });
-
-  // var area2 = d3.area()
-  //     .curve(d3.curveMonotoneX)
-  //     .x(function(d) { return x2(d.date); })
-  //     .y0(height2)
-  //     .y1(function(d) { return y2(d.PTS); });
 
   svg
     .append("defs")
@@ -278,12 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return a[1] - b[1];
     });
 
-    //
-    // focus.append("path")
-    //     .datum(arr)
-    //     .attr("class", "area")
-    //     .attr("d", area);
-
     // *** Parse the date / time
     var formatTime = d3.timeFormat("%H:%M:%S");
 
@@ -328,28 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .call(xAxis);
 
     focus.append("g").attr("class", "axis axis--y").call(yAxis);
-
-    // context.append("path")
-    //     .datum(data)
-    //     .attr("class", "area")
-    //     .attr("d", area2);
-
-    // context.append("g")
-    //     .attr("class", "axis axis--x")
-    //     .attr("transform", "translate(0," + height2 + ")")
-    //     .call(xAxis2);
-
-    // context.append("g")
-    //     .attr("class", "brush")
-    //     .call(brush)
-    //     .call(brush.move, x.range());
-
-    // focus.append("g")
-    //     .attr("class", "zoom")
-    //     .attr("width", width)
-    //     .attr("height", height)
-    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    //     .call(zoom);
 
     /**
      * Install event listeners on each of the buttons
