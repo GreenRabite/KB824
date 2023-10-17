@@ -3,6 +3,7 @@ const LAKER_GOLD = "#FDB927";
 const LAKER_PURPLE = "#552583";
 
 const NBA_TEAMS_CSV_PATH = "data/NBA-teams2.csv";
+const KOBE_GAME_LOG = "data/kobe-reg-games-log.csv";
 
 document.addEventListener("DOMContentLoaded", () => {
   let svg2 = d3.select(".svg2");
@@ -197,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-  d3.csv("./data/kobe-reg-games-log.csv", type, function (error, data) {
+  d3.csv(KOBE_GAME_LOG, type, function (error, data) {
     if (error) throw error;
     // console.log(data);
     x.domain(
