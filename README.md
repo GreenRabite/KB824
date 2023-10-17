@@ -22,6 +22,7 @@ python3 -m http.server
 ### Webscraping The Data
 
 The dataset for the games played was obtained by webscraping from basketball reference sites. This was done using *SuperAgent*, a small progressive client-side HTTP request library and *Cheerio*, a library which parses markups and provides an API for traversing/manipulating the resulting DOM data structure. The API call is as follow and was very short itself. Meaningful cleaning of the data had to be performed after extraction of the data ad if I had to do it again, I would look to see if I could extract the data more cleanly.
+
 ```javascript
 superagent
   .get(url)
